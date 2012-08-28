@@ -1,0 +1,84 @@
+#! /usr/bin/env python
+
+#
+# firstconfig
+#
+# Copyright (C) 2012  Red Flag Linux Co. Ltd
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Author(s):  Sian Cao <sycao@redflag-linux.com>
+#
+
+import optparse
+import os
+import sys
+import tempfile
+import traceback
+
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+
+import firstconfig.frontend
+
+def exception_handler(type, value, tb):
+    fd, path = tempfile.mkstemp(prefix='firstconfig-', suffix='.trace')
+    fo = os.fdopen(fd, 'w')
+    traceback.print_exception(type, value, tb, None, fo)
+    fo.close()
+
+sys.excepthook = exception_handler
+
+if __name__ == '__main__':
+
+    parser = optparse.OptionParser()
+    parser.add_option('-t', '--test',
+                      action='store_true', default=False)
+
+    opts, args = parser.parse_args()
+
+    # check if we're running in LiveCD
+    if os.path.exists('/run/redflagiso/sfs/root-image/root-image.fs'):
+        livecdMode = True
+    else: 
+        livecdMode = False
+
+    if (not livecdMode) and os.path.isfile('/etc/sysconfig/firstconfig'):
+        with open('/etc/sysconfig/firstconfig') as fobj:
+            for line in fobj:
+                if line.strip() == 'RUN_FIRSTBOOT=NO':
+                    os.system('systemctl stop firstconfig.service > /dev/null 2>&1')
+                    sys.exit(0)
+
+    frontend = None
+    if 'DISPLAY' not in os.environ:
+        frontend = lib.frontend.Frontend()
+        frontend.set_lang()
+        frontend.startx()
+        frontend.start_wm()
+        frontend.merge_xres()
+
+    app = QApplication(sys.argv)
+    window = QWidget()
+    window.resize(1024,576)
+    window.show()
+    app.exec_()
+
+    if frontend is not None:
+        frontend.kill()
+
+    if not opts.test:
+        with open('/etc/sysconfig/firstconfig', 'w') as f:
+            f.write('RUN_FIRSTBOOT=NO\n')
+
