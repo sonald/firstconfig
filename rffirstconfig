@@ -27,10 +27,8 @@ import sys
 import tempfile
 import traceback
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-
-import firstconfig.frontend
+from firstconfig import frontend
+from firstconfig import interface
 
 def exception_handler(type, value, tb):
     fd, path = tempfile.mkstemp(prefix='firstconfig-', suffix='.trace')
@@ -43,8 +41,8 @@ sys.excepthook = exception_handler
 if __name__ == '__main__':
 
     parser = optparse.OptionParser()
-    parser.add_option('-t', '--test',
-                      action='store_true', default=False)
+    parser.add_option('-t', '--test', action='store_true', default=False)
+    parser.add_option('-l', '--live', action='store_true', default=False)
 
     opts, args = parser.parse_args()
 
@@ -53,6 +51,10 @@ if __name__ == '__main__':
         livecdMode = True
     else: 
         livecdMode = False
+
+    # force livecdMode ( e.g testing round )
+    if opts.live:
+        livecdMode = True 
 
     if (not livecdMode) and os.path.isfile('/etc/sysconfig/firstconfig'):
         with open('/etc/sysconfig/firstconfig') as fobj:
@@ -63,17 +65,15 @@ if __name__ == '__main__':
 
     frontend = None
     if 'DISPLAY' not in os.environ:
-        frontend = lib.frontend.Frontend()
+        frontend = frontend.Frontend()
         frontend.set_lang()
         frontend.startx()
         frontend.start_wm()
         frontend.merge_xres()
 
-    app = QApplication(sys.argv)
-    window = QWidget()
-    window.resize(1024,576)
-    window.show()
-    app.exec_()
+    intf = interface.Interface(livecdMode, opts.test)
+    intf.createGUI()
+    intf.run()
 
     if frontend is not None:
         frontend.kill()
