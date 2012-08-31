@@ -37,14 +37,7 @@ class Interface:
         else:
             self.greeter = self.createFirstbootUI()
 
-    def createFirstbootUI(self):
-        log.debug("createFirstbootUI")
-        self.window = QWidget()
-        self.window.resize(1024,576)
-
-    def createLiveCDUI(self):
-        log.debug('createLiveCDUI')
-
+    def createSkeletonUI(self, pageHtml=""):
         self.window = QWidget()
         self.window.resize(1024,576)
         if not self.testMode:
@@ -75,13 +68,21 @@ class Interface:
         else:
             basedir = os.path.abspath(BASEDIR)
 
-        assetsPath = "file://" + os.path.join(basedir, "data/livecd.html")
-        htmlPath = os.path.join(basedir, "data/livecd.html")
+        assetsPath = "file://" + os.path.join(basedir, "data/" + pageHtml)
+        htmlPath = os.path.join(basedir, "data/" + pageHtml)
         log.debug('assetsPath: %s, htmlPath: %s', assetsPath, htmlPath)
 
         with open(htmlPath, "r") as f:
             data = f.read()
             view.page().mainFrame().setHtml(data, QUrl(assetsPath))
+
+    def createFirstbootUI(self):
+        log.debug("createFirstbootUI")
+        self.createSkeletonUI("firstboot.html")
+
+    def createLiveCDUI(self):
+        log.debug('createLiveCDUI')
+        self.createSkeletonUI("livecd.html")
 
     def setupInspector(self):
         page = self.view.page()
