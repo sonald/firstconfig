@@ -44,7 +44,25 @@ $(function() {
     });
 
     $('#start').bind('click', function() {
-        window.close();
+        // collect configs
+        firstcfg.options.mode = "livecd";
+        firstcfg.options.lang = $langs.find('tr.info').data('locale');
+
+        var res = firstcfg.validate();
+        console.log(res);
+        if ( !res.status ) {
+            alert(res.reason);
+            return;
+        } 
+
+        res = firstcfg.submit();
+        console.log(res);
+        if ( res.status ) {
+            // quit Fisrt config
+            console.log('closeWindow');
+            window.close();
+            hostobj.closeWindow();
+        }
     });
 });
 

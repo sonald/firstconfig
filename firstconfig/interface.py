@@ -13,6 +13,8 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtWebKit import *
 
+import json
+
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger('firstconfig.interface')
 
@@ -20,9 +22,33 @@ import gettext
 _ = lambda x: gettext.ldgettext("firstconfig", x)
 
 class ConfigHost(QObject):
+    def sendScript(self, opts = {}):
+        res = { 
+            "status": True
+        }
+        #TODO: exec /etc/postinstall?
+        return json.dumps(res)
+
+    def validate(self, opts = {}):
+        res = { 
+            "status": True
+        }
+        return json.dumps(res)
+
     @pyqtSlot()
     def closeWindow(self):
         sys.exit(0)
+
+    @pyqtSlot(str, str, result=str)
+    def request(self, cmd="", args=""):
+        cmds = {
+            "send": self.sendScript,
+            "validate": self.validate
+        }
+
+        print(cmd, args)
+        opts = json.loads(args)
+        return cmds[cmd](opts)
 
 class Interface:
     def __init__(self, livecdMode, testing=False):
@@ -36,6 +62,11 @@ class Interface:
             self.greeter = self.createLiveCDUI()
         else:
             self.greeter = self.createFirstbootUI()
+
+    def setupHostObjects(self):
+        log.debug('bound setupHostObjects')
+        hostobj = ConfigHost()
+        self.view.page().mainFrame().addToJavaScriptWindowObject("hostobj", hostobj)
 
     def createSkeletonUI(self, pageHtml=""):
         self.window = QWidget()
@@ -51,7 +82,7 @@ class Interface:
 
         splitter = QSplitter(self.window)
         splitter.setOrientation(Qt.Vertical)
-        self.window.setWindowTitle("Qomo Installer")
+        self.window.setWindowTitle("Fisrt Config")
 
         layout = QVBoxLayout(self.window)
         layout.setMargin(0)
@@ -60,8 +91,8 @@ class Interface:
         splitter.addWidget(view)
         splitter.addWidget(self.webInspector)
 
-        #view.page().mainFrame().addToJavaScriptWindowObject("firstconfig", ConfigHost)
-        log.debug('goes here')
+        frame = view.page().mainFrame()
+        frame.javaScriptWindowObjectCleared.connect(self.setupHostObjects)
 
         if self.testMode:
             basedir = os.path.abspath(os.path.curdir)
@@ -74,7 +105,7 @@ class Interface:
 
         with open(htmlPath, "r") as f:
             data = f.read()
-            view.page().mainFrame().setHtml(data, QUrl(assetsPath))
+            frame.setHtml(data, QUrl(assetsPath))
 
     def createFirstbootUI(self):
         log.debug("createFirstbootUI")

@@ -29,8 +29,15 @@ $(function() {
     $(window).on('resize', adjustMargin);
     adjustMargin();
 
+    var controlMap = {
+        'lang': $('#languages'),
+        'timezone': $('#timezone'),
+        'username': $('#inputUsername'),
+        'passwd': $('#inputPassword')
+    };
+    
     // languages 
-    var $langs = $('#languages');
+    var $langs = controlMap.lang;
     $langs.on('mouseover', 'tr', function() {
         $(this).addClass('success');
     });
@@ -45,24 +52,43 @@ $(function() {
     });
 
     // timezone
-    var tzSelect = document.querySelector('#timezone');
+    var $tzSelect = controlMap.timezone;
     var opt_tmpl = "<option value='%1'>%1</option>";
     var len = TZ_DATA.length;
     var opts = "<option value=''></option>";
     for (var i = 0; i < len; i++) {
         opts += opt_tmpl.replace(/%1/g, TZ_DATA[i]);
     }
-    tzSelect.innerHTML = opts;
-    $(tzSelect).select2({
+    $tzSelect[0].innerHTML = opts;
+    $tzSelect.select2({
         placeholder: "Choose your timezone",
         width: "60%"
     });
-    $(tzSelect).select2("val", "Asia/Shanghai");
+    $tzSelect.select2("val", "Asia/Shanghai");
 
-    // username
-    
     $('#start').bind('click', function() {
-        window.close();
+        // collect configs
+        firstcfg.options.mode = "firstboot";
+        firstcfg.options.lang = $langs.find('tr.info').data('locale');
+        firstcfg.options.timezone = $tzSelect.select2("val");
+        firstcfg.options.username = controlMap.username.val();
+        firstcfg.options.passwd = controlMap.passwd.val();
+
+        var res = firstcfg.validate();
+        console.log(res);
+        if ( !res.status ) {
+            firstcfg.notify( controlMap[res.entry], res.reason );
+            return false;
+        } 
+
+        res = firstcfg.submit();
+        console.log(res);
+        if ( res.status ) {
+            // quit Fisrt config
+            console.log('closeWindow');
+            window.close();
+            hostobj.closeWindow();
+        }
     });
 });
 
