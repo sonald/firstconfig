@@ -1,0 +1,83 @@
+#! /usr/bin/env python
+
+#
+# firstconfig
+#
+# Copyright (C) 2012  Red Flag Linux Co. Ltd
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Author(s):  Sian Cao <sycao@redflag-linux.com>
+#
+
+import optparse
+import os
+import sys
+import tempfile
+import traceback
+
+from firstconfig import frontend
+from firstconfig import interface
+
+
+def exception_handler(type, value, tb):
+    fd, path = tempfile.mkstemp(prefix='firstconfig-', suffix='.trace')
+    fo = os.fdopen(fd, 'w')
+    traceback.print_exception(type, value, tb, None, fo)
+    fo.close()
+
+sys.excepthook = exception_handler
+
+if __name__ == '__main__':
+    parser = optparse.OptionParser()
+    parser.add_option('-t', '--test', action='store_true', default=False)
+    parser.add_option('-l', '--live', action='store_true', default=False)
+
+    opts, args = parser.parse_args()
+
+    # check if we're running in LiveCD
+    if os.path.exists('/run/redflagiso/sfs/root-image/root-image.fs'):
+        livecdMode = True
+    else:
+        livecdMode = False
+
+    # force livecdMode ( e.g testing round )
+    if opts.live:
+        livecdMode = True
+
+    if (not livecdMode) and os.path.isfile('/etc/sysconfig/firstconfig'):
+        with open('/etc/sysconfig/firstconfig') as fobj:
+            for line in fobj:
+                if line.strip() == 'RUN_FIRSTBOOT=NO':
+                    os.system('systemctl stop firstconfig.service > /dev/null 2>&1')
+                    sys.exit(0)
+
+    afrontend = None
+    if 'DISPLAY' not in os.environ:
+        afrontend = frontend.Frontend()
+        afrontend.set_lang()
+        afrontend.startx()
+        afrontend.start_wm()
+        afrontend.merge_xres()
+
+    intf = interface.Interface(livecdMode, opts.test)
+    intf.createGUI()
+    intf.run()
+
+    if afrontend is not None:
+        afrontend.kill()
+
+    if not opts.test:
+        with open('/etc/sysconfig/firstconfig', 'w') as f:
+            f.write('RUN_FIRSTBOOT=NO\n')

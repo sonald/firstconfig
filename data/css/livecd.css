@@ -1,0 +1,31 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background: -webkit-linear-gradient(top, #7C6353 70%, #948787);
+}
+
+.container-fluid {
+    height: 100%;
+}
+
+#content {
+    margin: 100px auto; 
+}
+
+center {
+    margin: 20px auto;
+    font-weight: bold;
+    font-size: 14px;
+}
+ 
+.table td {
+    text-align: center;
+}
+
+.buttons {
+    text-align: center;
+    margin: 0 auto;
+}
+
