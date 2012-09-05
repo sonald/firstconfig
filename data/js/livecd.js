@@ -3,7 +3,7 @@
  *
  *       Filename:  livecd.js
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  08/30/2012 01:29:05 AM
@@ -53,12 +53,12 @@ $(function() {
         if ( !res.status ) {
             alert(res.reason);
             return;
-        } 
+        }
 
         res = firstcfg.submit();
         console.log(res);
         if ( res.status ) {
-            // quit Fisrt config
+            // quit First config
             console.log('closeWindow');
             window.close();
             hostobj.closeWindow();

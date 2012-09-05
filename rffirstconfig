@@ -30,6 +30,7 @@ import traceback
 from firstconfig import frontend
 from firstconfig import interface
 
+
 def exception_handler(type, value, tb):
     fd, path = tempfile.mkstemp(prefix='firstconfig-', suffix='.trace')
     fo = os.fdopen(fd, 'w')
@@ -39,7 +40,6 @@ def exception_handler(type, value, tb):
 sys.excepthook = exception_handler
 
 if __name__ == '__main__':
-
     parser = optparse.OptionParser()
     parser.add_option('-t', '--test', action='store_true', default=False)
     parser.add_option('-l', '--live', action='store_true', default=False)
@@ -49,12 +49,12 @@ if __name__ == '__main__':
     # check if we're running in LiveCD
     if os.path.exists('/run/redflagiso/sfs/root-image/root-image.fs'):
         livecdMode = True
-    else: 
+    else:
         livecdMode = False
 
     # force livecdMode ( e.g testing round )
     if opts.live:
-        livecdMode = True 
+        livecdMode = True
 
     if (not livecdMode) and os.path.isfile('/etc/sysconfig/firstconfig'):
         with open('/etc/sysconfig/firstconfig') as fobj:
@@ -63,22 +63,21 @@ if __name__ == '__main__':
                     os.system('systemctl stop firstconfig.service > /dev/null 2>&1')
                     sys.exit(0)
 
-    frontend = None
+    afrontend = None
     if 'DISPLAY' not in os.environ:
-        frontend = frontend.Frontend()
-        frontend.set_lang()
-        frontend.startx()
-        frontend.start_wm()
-        frontend.merge_xres()
+        afrontend = frontend.Frontend()
+        afrontend.set_lang()
+        afrontend.startx()
+        afrontend.start_wm()
+        afrontend.merge_xres()
 
     intf = interface.Interface(livecdMode, opts.test)
     intf.createGUI()
     intf.run()
 
-    if frontend is not None:
-        frontend.kill()
+    if afrontend is not None:
+        afrontend.kill()
 
     if not opts.test:
         with open('/etc/sysconfig/firstconfig', 'w') as f:
             f.write('RUN_FIRSTBOOT=NO\n')
-

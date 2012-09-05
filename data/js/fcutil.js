@@ -53,7 +53,7 @@
             // check username
             var usrname = opts.username;
             var reUsername = /^[a-z_][a-z0-9_-]*[$]?$/;
-            if ( !usrname || !reUsername.test(usrname) ) { 
+            if ( !usrname || !reUsername.test(usrname) ) {
                 return {
                     status: false,
                     entry: 'username',
@@ -75,7 +75,7 @@
             return {
                 status: true
             };
-        }, 
+        },
 
         submit: function() {
             var res = hostobj.request("send", JSON.stringify(this.options));

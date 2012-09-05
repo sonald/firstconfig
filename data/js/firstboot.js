@@ -3,7 +3,7 @@
  *
  *       Filename:  livecd.js
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  08/30/2012 01:29:05 AM
@@ -35,8 +35,8 @@ $(function() {
         'username': $('#inputUsername'),
         'passwd': $('#inputPassword')
     };
-    
-    // languages 
+
+    // languages
     var $langs = controlMap.lang;
     $langs.on('mouseover', 'tr', function() {
         $(this).addClass('success');
@@ -71,6 +71,8 @@ $(function() {
         firstcfg.options.mode = "firstboot";
         firstcfg.options.lang = $langs.find('tr.info').data('locale');
         firstcfg.options.timezone = $tzSelect.select2("val");
+        firstcfg.options.hostname = controlMap.username.val() + '-qomo';
+        firstcfg.options.keyboard = 'en_US';
         firstcfg.options.username = controlMap.username.val();
         firstcfg.options.passwd = controlMap.passwd.val();
 
@@ -79,7 +81,7 @@ $(function() {
         if ( !res.status ) {
             firstcfg.notify( controlMap[res.entry], res.reason );
             return false;
-        } 
+        }
 
         res = firstcfg.submit();
         console.log(res);

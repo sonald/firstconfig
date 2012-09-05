@@ -2,13 +2,13 @@
 
 from distutils.core import setup
 from glob import *
-import os
+
 
 data_files = [('/usr/sbin', ['rffirstconfig']),
         ('/usr/share/firstconfig/data/', glob('data/*.html')),
-        ('/usr/share/firstconfig/data/css', glob('data/css/*.css')),
+        ('/usr/share/firstconfig/data/css', glob('data/css/*.*')),
         ('/usr/share/firstconfig/data/js', glob('data/js/*.js')),
-        ('/lib/systemd/system', glob('systemd/*.service'))]
+        ('/usr/share/firstconfig/data/scripts', glob('data/scripts/*.sh'))]
 
 setup(name='firstconfig', version='0.1.0',
         description='Post-installation configuration utility',
