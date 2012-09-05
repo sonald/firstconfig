@@ -172,8 +172,8 @@ class Interface:
         self.webInspector.setVisible(not self.webInspector.isVisible())
 
     def run(self):
-        self.view.show()
-        self.window.show()
+        self.view.showMaximized()
+        self.window.showMaximized()
         self.app.exec_()
 
     def stop(self):
