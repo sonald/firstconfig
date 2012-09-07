@@ -13,7 +13,8 @@ RESULT_JUMP = 2
 
 BASEDIR = "/usr/share/firstconfig/"
 
-
+# I cannot depend on this I18N file for locale setting, cause in Qomo KDE's
+# language def may deviate from this setting
 I18N = '/etc/locale.conf'
 DISPLAY = ':9'
 VT = 'vt1'
