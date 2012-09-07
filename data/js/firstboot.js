@@ -77,8 +77,8 @@ $(function() {
         var $rf = toggleLicenseFor('redflag', lang_choice,
             $('.section').has('#languages'));
 
-        if (firstcfg.isOEM('sony')) {
-            toggleLicenseFor('sony', lang_choice, $rf);
+        if (firstcfg.isOEM() && firstcfg.oemLicense()) {
+            toggleLicenseFor(firstcfg.oemLicense(), lang_choice, $rf);
         }
     });
 

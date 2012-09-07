@@ -97,9 +97,12 @@
             return remoteRequest( "systemLang" ).LANG;
         },
 
-        //TODO: impliment it!
-        isOEM: function(oem) {
-            return true;
+        isOEM: function() {
+            return remoteRequest( "oemMode" ).status;
+        },
+
+        oemLicense: function() {
+            return remoteRequest( "oemLicense" ).license;
         }
     };
 

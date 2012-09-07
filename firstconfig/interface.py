@@ -74,6 +74,18 @@ class ConfigHost(QObject):
             "LANG": os.getenv('LANG')
         }
 
+    #TODO: implement it!
+    def getOEMLicense(self, opts={}):
+        return {
+            "license": ""
+        }
+
+    #TODO: implement it!
+    def isOemMode(self, opts={}):
+        return {
+        "status": True
+        }
+
     @pyqtSlot()
     def closeWindow(self):
         self.interface.stop()
@@ -83,7 +95,9 @@ class ConfigHost(QObject):
         cmds = {
             "send": self.sendScript,
             "validate": self.validate,
-            "systemLang": self.getSystemLang
+            "systemLang": self.getSystemLang,
+            "oemLicense": self.getOEMLicense,
+            "oemMode": self.isOemMode
         }
 
         print(cmd, args)
