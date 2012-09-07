@@ -54,8 +54,8 @@ $(function() {
 
     var sys_lang = firstcfg.systemLang();
 
-    function toggleLicenseFor(vendor, lang, pred) {
-        console.log(lang);
+    function toggleLicenseFor(vendor, src, pred) {
+
         var id = vendor + '_licence';
         var $license = $('#' + id );
 
@@ -64,8 +64,7 @@ $(function() {
             $license = $('<div class="section" id="' + id + '"></div>');
             $(pred).after($license);
         }
-        $license.html('<iframe src="licenses/' + id + '_' +
-            lang + '.html"></iframe>');
+        $license.html('<iframe src="' + src + '"></iframe>');
 
         return $license;
     }
@@ -74,11 +73,12 @@ $(function() {
         var locale_choice = $langs.find('tr.info').data('locale');
         var lang_choice = /(\S+_[^.]+)(\..*)?/.exec(locale_choice)[1];
 
-        var $rf = toggleLicenseFor('redflag', lang_choice,
+        var $rf = toggleLicenseFor('redflag',
+            'licenses/redflag_licence_' + lang_choice + '.html',
             $('.section').has('#languages'));
 
-        if (firstcfg.isOEM() && firstcfg.oemLicense()) {
-            toggleLicenseFor(firstcfg.oemLicense(), lang_choice, $rf);
+        if ( firstcfg.isOEM() && firstcfg.oemLicense() ) {
+            toggleLicenseFor('oem', 'oem/licence_' + lang_choice + '.html', $rf);
         }
     });
 
