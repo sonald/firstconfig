@@ -95,6 +95,11 @@
 
         systemLang: function() {
             return remoteRequest( "systemLang" ).LANG;
+        },
+
+        //TODO: impliment it!
+        isOEM: function(oem) {
+            return true;
         }
     };
 
