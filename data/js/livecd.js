@@ -43,6 +43,9 @@ $(function() {
         $(this).toggleClass('info');
     });
 
+    var sys_lang = firstcfg.systemLang();
+    $('tr[data-locale="' + sys_lang + '"]').trigger('click');
+
     $('#start').bind('click', function() {
         // collect configs
         firstcfg.options.mode = "livecd";
