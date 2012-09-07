@@ -18,18 +18,19 @@ log = logging.getLogger('firstconfig.frontend')
 
 from .constants import *
 
-class Frontend:
 
+class Frontend:
     def __init__(self):
         self.x = None
         self.wm_pid = None
 
     def set_lang(self):
-        i18n = shlex.split(open(I18N).read())
-        i18n = dict(item.split('=') for item in i18n)
-        if 'LANG' in i18n:
-            log.info('setting LANG to %s', i18n['LANG'])
-            os.environ['LANG'] = i18n['LANG']
+        if os.getenv('LANG') == None:
+            i18n = shlex.split(open(I18N).read())
+            i18n = dict(item.split('=') for item in i18n)
+            if 'LANG' in i18n:
+                log.info('setting LANG to %s', i18n['LANG'])
+                os.environ['LANG'] = i18n['LANG']
 
     def startx(self):
         def sigusr1_handler(num, frame):

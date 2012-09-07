@@ -51,6 +51,9 @@ $(function() {
         $(this).toggleClass('info');
     });
 
+    var sys_lang = firstcfg.systemLang();
+    $('tr[data-locale="' + sys_lang + '"]').trigger('click');
+
     // timezone
     var $tzSelect = controlMap.timezone;
     var opt_tmpl = "<option value='%1'>%1</option>";

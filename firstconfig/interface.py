@@ -69,6 +69,11 @@ class ConfigHost(QObject):
             "status": True
         }
 
+    def getSystemLang(self, opts={}):
+        return {
+            "LANG": os.getenv('LANG')
+        }
+
     @pyqtSlot()
     def closeWindow(self):
         self.interface.stop()
@@ -77,7 +82,8 @@ class ConfigHost(QObject):
     def request(self, cmd="", args=""):
         cmds = {
             "send": self.sendScript,
-            "validate": self.validate
+            "validate": self.validate,
+            "systemLang": self.getSystemLang
         }
 
         print(cmd, args)

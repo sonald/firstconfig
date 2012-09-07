@@ -15,8 +15,20 @@
  * =====================================================================================
 */
 
+/*jslint browser: true, devel: true, jquery:true*/
+/*global hostobj: false*/
+
 (function(global, undefined) {
     "use strict";
+
+    function remoteRequest(cmd, args) {
+        args = args || {};
+        if (typeof args !== "string") {
+            args = JSON.stringify( args );
+        }
+        var res = hostobj.request(cmd, args);
+        return JSON.parse(res);
+    }
 
     global.firstcfg = {
         options: {
@@ -33,7 +45,8 @@
                 title: msg,
                 placement: 'right',
                 trigger: 'manual'
-            })
+            });
+
             $elem.tooltip('show');
             setTimeout(function() {
                 $elem.tooltip('destroy');
@@ -61,12 +74,11 @@
                 };
             }
 
-            var res = hostobj.request( "validate", JSON.stringify({
+            var res = remoteRequest( "validate", {
                 entry: 'username',
                 value: usrname
-            }) );
+            } );
 
-            res = JSON.parse(res);
             console.log(res);
             if (res.status === false) {
                 return res;
@@ -78,8 +90,11 @@
         },
 
         submit: function() {
-            var res = hostobj.request("send", JSON.stringify(this.options));
-            return JSON.parse(res);
+            return remoteRequest( "send", this.options );
+        },
+
+        systemLang: function() {
+            return remoteRequest( "systemLang" ).LANG;
         }
     };
 
