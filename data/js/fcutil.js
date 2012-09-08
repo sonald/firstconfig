@@ -63,6 +63,7 @@
                 };
             }
 
+
             // check username
             var usrname = opts.username;
             var reUsername = /^[a-z_][a-z0-9_-]*[$]?$/;
@@ -99,10 +100,6 @@
 
         isOEM: function() {
             return remoteRequest( "oemMode" ).status;
-        },
-
-        oemLicense: function() {
-            return remoteRequest( "oemLicense" ).license;
         }
     };
 

@@ -54,11 +54,13 @@ $(function() {
         $(this).trigger('languageChanged.firstboot');
     });
 
+
+    // handle lang switching
     var sys_lang = firstcfg.systemLang();
 
     function toggleLicenseFor(vendor, src, pred) {
 
-        var id = vendor + '_licence';
+        var id = vendor + '_license';
         var $license = $('#' + id );
 
         if ($license.length === 0) {
@@ -66,7 +68,9 @@ $(function() {
             $license = $('<div class="section" id="' + id + '"></div>');
             $(pred).after($license);
         }
-        $license.html('<iframe src="' + src + '"></iframe>');
+
+        var tmpl = document.querySelector('#license_template').innerHTML;
+        $license.html( tmpl.replace('%1', src) );
 
         return $license;
     }
@@ -79,12 +83,47 @@ $(function() {
             'licenses/redflag_licence_' + lang_choice + '.html',
             $('.section').has('#languages'));
 
-        if ( firstcfg.isOEM() && firstcfg.oemLicense() ) {
+        if ( firstcfg.isOEM() ) {
             toggleLicenseFor('oem', 'oem/licence_' + lang_choice + '.html', $rf);
         }
     });
 
     $('tr[data-locale="' + sys_lang + '"]').trigger('click');
+
+
+    // license handling
+    function registerLicenseHandler(host) {
+        var $btn = host.find('.mycheckbox');
+
+        var controller = {
+            agree: function() {
+                $btn.addClass('checked');
+            },
+
+            disagree: function() {
+                $btn.removeClass('checked');
+            },
+
+            toggle: function() {
+                $btn.toggleClass('checked');
+            }
+        };
+
+        host.on('click', '.mycheckbox', function() {
+            controller.toggle();
+        });
+
+        return controller;
+    }
+
+    var rf_handler = registerLicenseHandler( $('#redflag_license') );
+    rf_handler.agree();
+
+    if (firstcfg.isOEM()) {
+        var oem_handler = registerLicenseHandler( $('#oem_license') );
+        oem_handler.disagree();
+    }
+
 
     // timezone
     var $tzSelect = controlMap.timezone;
@@ -130,6 +169,16 @@ $(function() {
         firstcfg.options.keyboard = 'en_US';
         firstcfg.options.username = $usrname.val();
         firstcfg.options.passwd = $passwd.val();
+
+        var licenseAgreed = Array.prototype.reduce.call(
+            $('.mycheckbox'), function(prev, cur, idx) {
+                return prev && $(cur).hasClass('checked');
+            }, true);
+
+        if (!licenseAgreed) {
+            firstcfg.notify( '#start', 'you need to agree all licenses to continue' );
+            return false;
+        }
 
         var res = firstcfg.validate();
         console.log(res);

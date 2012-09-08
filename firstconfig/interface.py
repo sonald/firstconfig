@@ -77,16 +77,8 @@ class ConfigHost(QObject):
             "LANG": os.getenv('LANG')
         }
 
-    #TODO: implement it!
-    def getOEMLicense(self, opts={}):
-        return {
-            "license": ""
-        }
-
-    #TODO: implement it!
+    # right now only use oem license path to determine if it's OEM or not
     def isOemMode(self, opts={}):
-        # check ISO flag
-
         return {
         "status": os.path.exists(OEM_LICENSES_PATH)
         }
@@ -101,7 +93,6 @@ class ConfigHost(QObject):
             "send": self.sendScript,
             "validate": self.validate,
             "systemLang": self.getSystemLang,
-            "oemLicense": self.getOEMLicense,
             "oemMode": self.isOemMode
         }
 
