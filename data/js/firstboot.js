@@ -49,9 +49,39 @@ $(function() {
     $langs.on('click', 'tr', function() {
         $langs.find('.info').removeClass('info');
         $(this).toggleClass('info');
+        $(this).trigger('languageChanged.firstboot');
     });
 
     var sys_lang = firstcfg.systemLang();
+
+    function toggleLicenseFor(vendor, src, pred) {
+
+        var id = vendor + '_licence';
+        var $license = $('#' + id );
+
+        if ($license.length === 0) {
+            console.log('create license for ' + vendor);
+            $license = $('<div class="section" id="' + id + '"></div>');
+            $(pred).after($license);
+        }
+        $license.html('<iframe src="' + src + '"></iframe>');
+
+        return $license;
+    }
+
+    $('form').on('languageChanged.firstboot', function() {
+        var locale_choice = $langs.find('tr.info').data('locale');
+        var lang_choice = /(\S+_[^.]+)(\..*)?/.exec(locale_choice)[1];
+
+        var $rf = toggleLicenseFor('redflag',
+            'licenses/redflag_licence_' + lang_choice + '.html',
+            $('.section').has('#languages'));
+
+        if ( firstcfg.isOEM() && firstcfg.oemLicense() ) {
+            toggleLicenseFor('oem', 'oem/licence_' + lang_choice + '.html', $rf);
+        }
+    });
+
     $('tr[data-locale="' + sys_lang + '"]').trigger('click');
 
     // timezone

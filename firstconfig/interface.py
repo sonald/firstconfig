@@ -74,6 +74,20 @@ class ConfigHost(QObject):
             "LANG": os.getenv('LANG')
         }
 
+    #TODO: implement it!
+    def getOEMLicense(self, opts={}):
+        return {
+            "license": ""
+        }
+
+    #TODO: implement it!
+    def isOemMode(self, opts={}):
+        # check ISO flag
+
+        return {
+        "status": os.path.exists(OEM_LICENSES_PATH)
+        }
+
     @pyqtSlot()
     def closeWindow(self):
         self.interface.stop()
@@ -83,7 +97,9 @@ class ConfigHost(QObject):
         cmds = {
             "send": self.sendScript,
             "validate": self.validate,
-            "systemLang": self.getSystemLang
+            "systemLang": self.getSystemLang,
+            "oemLicense": self.getOEMLicense,
+            "oemMode": self.isOemMode
         }
 
         print(cmd, args)
@@ -146,9 +162,16 @@ class Interface:
         else:
             basedir = os.path.abspath(BASEDIR)
 
-        assetsPath = "file://" + os.path.join(basedir, "data/" + pageHtml)
         htmlPath = os.path.join(basedir, "data/" + pageHtml)
+        assetsPath = "file://" + htmlPath
         log.debug('assetsPath: %s, htmlPath: %s', assetsPath, htmlPath)
+
+        oem_path = os.path.join(basedir, "data/oem")
+        if os.path.exists(OEM_LICENSES_PATH):
+            if os.path.exists(oem_path):
+                os.unlink(oem_path)
+
+            os.symlink(OEM_LICENSES_PATH, oem_path)
 
         with open(htmlPath, "r") as f:
             data = f.read()

@@ -13,6 +13,9 @@ RESULT_JUMP = 2
 
 BASEDIR = "/usr/share/firstconfig/"
 
+# this path stores licenses files
+OEM_LICENSES_PATH= '/usr/share/licenses/oem/'
+
 # I cannot depend on this I18N file for locale setting, cause in Qomo KDE's
 # language def may deviate from this setting
 I18N = '/etc/locale.conf'
