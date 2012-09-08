@@ -57,4 +57,31 @@ else
 	echo -e "${HIPPO_PASSWD}\n${HIPPO_PASSWD}" | passwd $HIPPO_USERNAME
 fi
 
+# do create a whole logical partition for OEM
+if [ -n "$HIPPO_OEM" ]; then
+	do_make_extended=0
+	destdisk='/dev/sda'
+
+	# check disk type
+	disktype=$( parted -s -m $destdisk p  |awk -F: 'NR==2 {print $6}' )
+	if [[ -n $disktype && $disktype == 'msdos' ]]; then
+
+		if `parted -s $destdisk p | grep -q extended`; then
+			echo "DEBUG: $destdisk has extended partition already"
+		else
+			do_make_extended=1
+		fi
+	else
+		echo "DEBUG: $destdisk is not a msdos type disk"
+	fi
+
+	if [ x$do_make_extended == x1 ]; then
+		begin=$( parted -s -m $destdisk unit MB p  |awk -F: 'END { sub("MB", "", $3); print $3 }' )
+
+		# now create it!
+		parted $destdisk unit MB mkpart extended $((begin + 1)) 100%
+		parted -s -m $destdisk unit MB mkpart logical $((begin + 2)) 100%
+	fi
+fi
+
 echo "firstboot setup finished"

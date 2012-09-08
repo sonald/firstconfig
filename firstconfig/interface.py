@@ -46,6 +46,9 @@ class ConfigHost(QObject):
             env['HIPPO_TIMEZONE'] = opts['timezone']
             env['HIPPO_KEYBOARD'] = opts['keyboard']
 
+        if self.isOemMode():
+            env['HIPPO_OEM'] = 'true'
+
         # tell script how to fake running during test
         if self.interface.testMode:
             env['HIPPO_TESTMODE'] = '1'
