@@ -15,21 +15,6 @@ fi
 # HIPPO_LANG=zh_CN.UTF-8
 echo "export LANG=${HIPPO_LANG}" > /etc/skel/.xprofile
 
-
-## hostname
-echo $HIPPO_HOSTNAME > /etc/hostname
-
-## localtime
-# HIPPO_TIMEZONE=Asia/Shanghai
-ln -sf /usr/share/zoneinfo/$HIPPO_TIMEZONE /etc/localtime
-echo "${HIPPO_TIMEZONE}" > /etc/timezone
-
-## keybord
-# HIPPO_KEYBOARD=en_US
-cat << EOF > /etc/vconsole.conf
-KEYMAP=$HIPPO_KEYBOARD
-EOF
-
 ## kde
 if [ -f /usr/share/config/kdm/kdmrc ]; then
 	sed -i "s/^#Language.*/Language=`echo ${HIPPO_LANG}| cut -d . -f 1`/g" /usr/share/config/kdm/kdmrc
@@ -48,6 +33,26 @@ if [ -f /usr/share/config/kdm/kdmrc ]; then
 		sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/plasma-desktop-appletsrc
 	fi
 fi
+
+if [ -n "$HIPPO_LIVECD" ]; then
+	echo "firstboot setup finished"
+	exit 0
+fi
+
+## hostname
+echo $HIPPO_HOSTNAME > /etc/hostname
+
+## localtime
+# HIPPO_TIMEZONE=Asia/Shanghai
+ln -sf /usr/share/zoneinfo/$HIPPO_TIMEZONE /etc/localtime
+echo "${HIPPO_TIMEZONE}" > /etc/timezone
+
+## keybord
+# HIPPO_KEYBOARD=en_US
+cat << EOF > /etc/vconsole.conf
+KEYMAP=$HIPPO_KEYBOARD
+EOF
+
 
 ## add user
 useradd -m -g users -G wheel,video,audio,adm  $HIPPO_USERNAME

@@ -49,6 +49,9 @@ class ConfigHost(QObject):
         if self.isOemMode():
             env['HIPPO_OEM'] = 'true'
 
+        if self.interface.livecdMode:
+            env['HIPPO_LIVECD'] = '1'
+
         # tell script how to fake running during test
         if self.interface.testMode:
             env['HIPPO_TESTMODE'] = '1'
