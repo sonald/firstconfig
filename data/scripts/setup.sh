@@ -51,6 +51,10 @@ fi
 
 ## add user
 useradd -m -g users -G wheel,video,audio,adm  $HIPPO_USERNAME
-echo -e "${HIPPO_PASSWD}\n${HIPPO_PASSWD}" | passwd $HIPPO_USERNAME
+if [ -z "$HIPPO_PASSWD" ]; then
+	passwd -d $HIPPO_USERNAME
+else
+	echo -e "${HIPPO_PASSWD}\n${HIPPO_PASSWD}" | passwd $HIPPO_USERNAME
+fi
 
 echo "firstboot setup finished"

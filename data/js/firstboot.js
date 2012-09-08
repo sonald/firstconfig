@@ -33,7 +33,9 @@ $(function() {
         'lang': $('#languages'),
         'timezone': $('#timezone'),
         'username': $('#inputUsername'),
-        'passwd': $('#inputPassword')
+        'passwd': $('#inputPassword'),
+        'passwdAgain': $('#inputPasswordAgain'),
+        'hostname': $('#inputHostname')
     };
 
     // languages
@@ -99,15 +101,35 @@ $(function() {
     });
     $tzSelect.select2("val", "Asia/Shanghai");
 
+    var $passwd = controlMap.passwd;
+    var $passwdAgain = controlMap.passwdAgain;
+    $passwdAgain.on('change focusout', function() {
+        if ($passwd.val() !== $passwdAgain.val()) {
+            firstcfg.notify( $passwdAgain, "passwd does not match" );
+        }
+    });
+
+    //hostname
+    controlMap.hostname.val('-redflag');
+
+    var $usrname = controlMap.username;
+    $usrname.on('keyup', function() {
+        setTimeout(function() {
+            controlMap.hostname.val( $usrname.val() + '-redflag' );
+        }, 0);
+    });
+
+
+    // start journey: check all necessary fields and submit results
     $('#start').bind('click', function() {
         // collect configs
         firstcfg.options.mode = "firstboot";
         firstcfg.options.lang = $langs.find('tr.info').data('locale');
         firstcfg.options.timezone = $tzSelect.select2("val");
-        firstcfg.options.hostname = controlMap.username.val() + '-qomo';
+        firstcfg.options.hostname = controlMap.hostname.val();
         firstcfg.options.keyboard = 'en_US';
-        firstcfg.options.username = controlMap.username.val();
-        firstcfg.options.passwd = controlMap.passwd.val();
+        firstcfg.options.username = $usrname.val();
+        firstcfg.options.passwd = $passwd.val();
 
         var res = firstcfg.validate();
         console.log(res);
