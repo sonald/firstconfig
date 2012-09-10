@@ -86,6 +86,8 @@ $(function() {
         if ( firstcfg.isOEM() ) {
             toggleLicenseFor('oem', 'oem/licence_' + lang_choice + '.html', $rf);
         }
+
+        setupLicenseHandlers();
     });
 
     $('tr[data-locale="' + sys_lang + '"]').trigger('click');
@@ -116,12 +118,14 @@ $(function() {
         return controller;
     }
 
-    var rf_handler = registerLicenseHandler( $('#redflag_license') );
-    rf_handler.agree();
+    function setupLicenseHandlers() {
+        var rf_handler = registerLicenseHandler( $('#redflag_license') );
+        rf_handler.agree();
 
-    if (firstcfg.isOEM()) {
-        var oem_handler = registerLicenseHandler( $('#oem_license') );
-        oem_handler.disagree();
+        if (firstcfg.isOEM()) {
+            var oem_handler = registerLicenseHandler( $('#oem_license') );
+            oem_handler.disagree();
+        }
     }
 
 
