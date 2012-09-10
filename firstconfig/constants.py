@@ -20,7 +20,8 @@ OEM_LICENSES_PATH = '/usr/share/licenses/oem/'
 # language def may deviate from this setting
 I18N = '/etc/locale.conf'
 DISPLAY = ':9'
-VT = 'vt1'
+# tricky: I don't know why, but vt1 may cause problem
+VT = 'vt2'
 
 WMS = ('mutter',
        'metacity',

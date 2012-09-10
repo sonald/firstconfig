@@ -60,7 +60,6 @@ if __name__ == '__main__':
         with open('/etc/sysconfig/firstconfig') as fobj:
             for line in fobj:
                 if line.strip() == 'RUN_FIRSTBOOT=NO':
-                    os.system('systemctl stop firstconfig.service > /dev/null 2>&1')
                     sys.exit(0)
 
     afrontend = None
