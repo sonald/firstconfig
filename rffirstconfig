@@ -62,6 +62,10 @@ if __name__ == '__main__':
                 if line.strip() == 'RUN_FIRSTBOOT=NO':
                     sys.exit(0)
 
+    # dirty check: if runs sony iso, disable frontend showup
+    if os.path.exists('/etc/sony-release'):
+        sys.exit(0)
+
     afrontend = None
     if 'DISPLAY' not in os.environ:
         afrontend = frontend.Frontend()
