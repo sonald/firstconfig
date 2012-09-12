@@ -8,6 +8,8 @@
         <script src="js/jquery-1.8.0.js" type="text/javascript"> </script>
         <script src="js/bootstrap.js" type="text/javascript"> </script>
 
+        <script src="js/jed.js" type="text/javascript"> </script>
+
         <link href="css/livecd.css" rel="stylesheet">
         <script src="js/fcutil.js" type="text/javascript"> </script>
         <script src="js/livecd.js" type="text/javascript"> </script>
@@ -19,7 +21,9 @@
             <div class="row-fluid" id="content">
                 <div class="span5"></div>
                 <div class="span2">
-                    <center> Select a language </center>
+                    <center data-message='Select a language'>
+                        gettext('Select a language')
+                    </center>
                     <table id="languages" class="table table-hover table-bordered">
                         <tbody>
                             <tr class="" data-locale="zh_CN.UTF-8">
@@ -32,7 +36,9 @@
                     </table>
 
                     <ul class="buttons">
-                        <a id='start' class="btn btn-info">Start Journey &rarr;</a>
+                        <a id='start' class="btn btn-info" data-message='Start Journey →'>
+                            gettext('Start Journey →')
+                        </a>
                     </ul>
                 </div>
             </div>

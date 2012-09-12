@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-11 17:26+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Language: zh_CN\n"
+"X-Source-Language: C\n"
+
+#: livecd.html:25 firstboot.html:32
+msgid "Select a language"
+msgstr "选择语言"
+
+#: livecd.html:40 firstboot.html:98
+msgid "Start Journey →"
+msgstr "开始旅程 →"
+
+#: firstboot.html:52
+msgid "Timezone:"
+msgstr "时区:"
+
+#: firstboot.html:63
+msgid "Username:"
+msgstr "用户名："
+
+#: firstboot.html:71
+msgid "Password:"
+msgstr "密码："
+
+#: firstboot.html:79
+msgid "Again:"
+msgstr "再次输入密码："
+
+#: firstboot.html:89
+msgid "Hostname:"
+msgstr "主机名："
+
+#: firstboot.html:116
+msgid "Agree"
+msgstr "同意"
+
+#: js/fcutil.js:95
+msgid "username is empty or invalid"
+msgstr "用户名为空或者无效"
+
+#: js/firstboot.js:153
+msgid "passwd does not match"
+msgstr "密码不匹配"
+
+#: js/firstboot.js:185
+msgid "you need to agree all licenses to continue"
+msgstr "您必须同意所有licenses才能继续"
