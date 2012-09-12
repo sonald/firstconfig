@@ -1,0 +1,60 @@
+{
+   "en_US": {
+      "": {
+         "Project-Id-Version": " PACKAGE VERSION",
+         "Report-Msgid-Bugs-To": " ",
+         "POT-Creation-Date": " 2012-09-11 17:26+0800",
+         "PO-Revision-Date": " YEAR-MO-DA HO:MI+ZONE",
+         "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
+         "Language-Team": " LANGUAGE <LL@li.org>",
+         "Language": " ",
+         "MIME-Version": " 1.0",
+         "Content-Type": " text/plain; charset=UTF-8",
+         "Content-Transfer-Encoding": " 8bit"
+      },
+      "Select a language": [
+         null,
+         ""
+      ],
+      "Start Journey →": [
+         null,
+         ""
+      ],
+      "Timezone:": [
+         null,
+         ""
+      ],
+      "Username:": [
+         null,
+         ""
+      ],
+      "Password:": [
+         null,
+         ""
+      ],
+      "Again:": [
+         null,
+         ""
+      ],
+      "Hostname:": [
+         null,
+         ""
+      ],
+      "Agree": [
+         null,
+         ""
+      ],
+      "username is empty or invalid": [
+         null,
+         ""
+      ],
+      "passwd does not match": [
+         null,
+         ""
+      ],
+      "you need to agree all licenses to continue": [
+         null,
+         ""
+      ]
+   }
+}

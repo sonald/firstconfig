@@ -16,7 +16,7 @@
 */
 
 /*jslint browser: true, devel: true, jquery:true*/
-/*global hostobj: false*/
+/*global hostobj: false, Jed: false*/
 
 (function(global, undefined) {
     "use strict";
@@ -53,8 +53,31 @@
             }, 1000);
         },
 
+        i18n: null,
+        loadTranslation: function(lang) {
+            var self = this;
+
+            $.getJSON('messages/client.' + lang + '.json', function(data) {
+                self.i18n = new Jed({
+                    'domain': lang,
+                    'locale_data': data
+                });
+
+                 //FIXME: this is terrible, a lot of reflows
+                 var objs = document.querySelectorAll('[data-message]');
+                 Array.prototype.forEach.call(objs, function(elem) {
+                    elem.firstChild.nodeValue = self.i18n.gettext($(elem).data('message'));
+                    console.log('orig: %s -> %s', $(elem).data('message'), elem.firstChild.nodeValue);
+                });
+
+             });
+        },
+
         validate: function() {
+            var self = this;
             var opts = this.options;
+            var gettext;
+
             console.log(opts);
 
             if (opts.mode === 'livecd') {
@@ -63,6 +86,13 @@
                 };
             }
 
+            if (this.i18n) {
+                gettext = function() {
+                    return self.i18n.gettext.apply(self.i18n, arguments);
+                };
+            } else {
+                gettext = function(msg) { return msg; };
+            }
 
             // check username
             var usrname = opts.username;
@@ -71,7 +101,7 @@
                 return {
                     status: false,
                     entry: 'username',
-                    reason: 'username is empty or invalid'
+                    reason: gettext('username is empty or invalid')
                 };
             }
 

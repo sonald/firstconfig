@@ -41,9 +41,20 @@ $(function() {
     $langs.on('click', 'tr', function() {
         $langs.find('.info').removeClass('info');
         $(this).toggleClass('info');
+        $(this).trigger('languageChanged.livecd');
     });
 
     var sys_lang = firstcfg.systemLang();
+
+    $('#languages').on('languageChanged.livecd', function() {
+        console.log('switch ui');
+        var locale_choice = $langs.find('tr.info').data('locale');
+        var lang_choice = /(\S+_[^.]+)(\..*)?/.exec(locale_choice)[1];
+
+        firstcfg.loadTranslation(lang_choice);
+    });
+
+
     $('tr[data-locale="' + sys_lang + '"]').trigger('click');
 
     $('#start').bind('click', function() {

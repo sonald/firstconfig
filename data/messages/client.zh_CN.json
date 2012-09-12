@@ -1,0 +1,63 @@
+{
+   "zh_CN": {
+      "": {
+         "Project-Id-Version": " PACKAGE VERSION",
+         "Report-Msgid-Bugs-To": " ",
+         "POT-Creation-Date": " 2012-09-11 17:26+0800",
+         "PO-Revision-Date": " YEAR-MO-DA HO:MI+ZONE",
+         "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
+         "Language-Team": " LANGUAGE <LL@li.org>",
+         "Language": " ",
+         "MIME-Version": " 1.0",
+         "Content-Type": " text/plain; charset=UTF-8",
+         "Content-Transfer-Encoding": " 8bit",
+         "Plural-Forms": " nplurals=1; plural=0;",
+         "X-Language": " zh_CN",
+         "X-Source-Language": " C"
+      },
+      "Select a language": [
+         null,
+         "选择语言"
+      ],
+      "Start Journey →": [
+         null,
+         "开始旅程 →"
+      ],
+      "Timezone:": [
+         null,
+         "时区:"
+      ],
+      "Username:": [
+         null,
+         "用户名："
+      ],
+      "Password:": [
+         null,
+         "密码："
+      ],
+      "Again:": [
+         null,
+         "再次输入密码："
+      ],
+      "Hostname:": [
+         null,
+         "主机名："
+      ],
+      "Agree": [
+         null,
+         "同意"
+      ],
+      "username is empty or invalid": [
+         null,
+         "用户名为空或者无效"
+      ],
+      "passwd does not match": [
+         null,
+         "密码不匹配"
+      ],
+      "you need to agree all licenses to continue": [
+         null,
+         "您必须同意所有licenses才能继续"
+      ]
+   }
+}

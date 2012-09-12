@@ -88,6 +88,8 @@ $(function() {
         }
 
         setupLicenseHandlers();
+
+        firstcfg.loadTranslation(lang_choice);
     });
 
     $('tr[data-locale="' + sys_lang + '"]').trigger('click');
@@ -148,7 +150,7 @@ $(function() {
     var $passwdAgain = controlMap.passwdAgain;
     $passwdAgain.on('change focusout', function() {
         if ($passwd.val() !== $passwdAgain.val()) {
-            firstcfg.notify( $passwdAgain, "passwd does not match" );
+            firstcfg.notify( $passwdAgain, firstcfg.i18n.gettext("passwd does not match") );
         }
     });
 
@@ -180,7 +182,7 @@ $(function() {
             }, true);
 
         if (!licenseAgreed) {
-            firstcfg.notify( '#start', 'you need to agree all licenses to continue' );
+            firstcfg.notify( '#start', firstcfg.i18n.gettext('you need to agree all licenses to continue' ));
             return false;
         }
 
