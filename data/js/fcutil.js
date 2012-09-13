@@ -32,11 +32,11 @@
 
     global.firstcfg = {
         options: {
-            mode: '', // livecd or firstboot
-            lang: 'en_US.UTF-8',
-            timezone: 'Asia/Shanghai',
-            username: '',
-            passwd: ''
+            mode: '' // livecd or firstboot
+            // lang: 'en_US.UTF-8',
+            // timezone: 'Asia/Shanghai',
+            // username: '',
+            // passwd: ''
         },
 
         notify: function(elem, msg) {
@@ -94,25 +94,28 @@
                 gettext = function(msg) { return msg; };
             }
 
-            // check username
-            var usrname = opts.username;
-            var reUsername = /^[a-z_][a-z0-9_-]*[$]?$/;
-            if ( !usrname || !reUsername.test(usrname) ) {
-                return {
-                    status: false,
+
+            if ('username' in opts) {
+                // check username
+                var usrname = opts.username;
+                var reUsername = /^[a-z_][a-z0-9_-]*[$]?$/;
+                if ( !usrname || !reUsername.test(usrname) ) {
+                    return {
+                        status: false,
+                        entry: 'username',
+                        reason: gettext('username is empty or invalid')
+                    };
+                }
+
+                var res = remoteRequest( "validate", {
                     entry: 'username',
-                    reason: gettext('username is empty or invalid')
-                };
-            }
+                    value: usrname
+                } );
 
-            var res = remoteRequest( "validate", {
-                entry: 'username',
-                value: usrname
-            } );
-
-            console.log(res);
-            if (res.status === false) {
-                return res;
+                console.log(res);
+                if (res.status === false) {
+                    return res;
+                }
             }
 
             return {
@@ -130,6 +133,10 @@
 
         isOEM: function() {
             return remoteRequest( "oemMode" ).status;
+        },
+
+        uicomponents: function() {
+            return remoteRequest( "uicomponents" );
         }
     };
 

@@ -38,13 +38,28 @@ class ConfigHost(QObject):
         log.debug(opts)
 
         env = os.environ
-        env['HIPPO_LANG'] = opts['lang']
+        if opts.get('lang'):
+            env['HIPPO_LANG'] = opts['lang']
+
         if not self.interface.livecdMode:
-            env['HIPPO_USERNAME'] = opts['username']
-            env['HIPPO_HOSTNAME'] = opts['hostname']
-            env['HIPPO_PASSWD'] = opts['passwd']
-            env['HIPPO_TIMEZONE'] = opts['timezone']
-            env['HIPPO_KEYBOARD'] = opts['keyboard']
+            if opts.get('extended'):
+                env['HIPPO_EXTENDED'] = '1'
+
+            if opts.get('fulldisk'):
+                env['HIPPO_FULLDISK'] = opts['fulldisk']
+
+            if opts.get('username'):
+                env['HIPPO_USERNAME'] = opts['username']
+                env['HIPPO_PASSWD'] = opts['passwd']
+
+            if opts.get('hostname'):
+                env['HIPPO_HOSTNAME'] = opts['hostname']
+
+            if opts.get('timezone'):
+                env['HIPPO_TIMEZONE'] = opts['timezone']
+
+            if opts.get('keybaord'):
+                env['HIPPO_KEYBOARD'] = opts['keyboard']
 
         if self.isOemMode():
             env['HIPPO_OEM'] = 'true'
@@ -61,7 +76,7 @@ class ConfigHost(QObject):
                 shell=True, env=env)
             ret = subp.wait()
         except Exception as e:
-            log.debug(e)
+            log.debug('error: %s', str(e))
             ret = 1
 
         if ret != 0:
@@ -86,6 +101,9 @@ class ConfigHost(QObject):
         "status": os.path.exists(OEM_LICENSES_PATH)
         }
 
+    def getUIComponents(self, opts={}):
+        return self.interface.conf
+
     @pyqtSlot()
     def closeWindow(self):
         self.interface.stop()
@@ -96,10 +114,11 @@ class ConfigHost(QObject):
             "send": self.sendScript,
             "validate": self.validate,
             "systemLang": self.getSystemLang,
-            "oemMode": self.isOemMode
+            "oemMode": self.isOemMode,
+            "uicomponents": self.getUIComponents
         }
 
-        print(cmd, args)
+        print('cmd is ', cmd, args)
         opts = json.loads(args)
         try:
             res = cmds[cmd](opts)
@@ -115,7 +134,37 @@ class Interface:
         self.app = QApplication(sys.argv)
         self.livecdMode = livecdMode
         self.testMode = testing
+        self.loadrcconf()
+
         log.debug('Interface livecdMode %s, testing %s', livecdMode, testing)
+
+    def loadrcconf(self):
+        self.conf = {
+            'RF_FULLDISK': False,
+            'RF_LANG': False,
+            'RF_RFLICENSE': False,
+            'RF_HWLICENSE': False,
+            'RF_TIMEZONE': False,
+            'RF_KEYBOARD': False,
+            'RF_USERNAME': False,
+            'RF_PASSWD': False,
+            'RF_HOSTNAME': False,
+            'RF_EXTENDED': False
+        }
+        if not os.path.exists('/etc/hippo.conf'):
+            return
+
+        with open(RF_CONF) as conffile:
+            for line in conffile:
+                k, v = line.strip().split('=')
+                if v == '0':
+                    v = False
+                elif v == '1':
+                    v = True
+
+                self.conf[k] = v
+
+        log.debug('load hippo.conf %s', str(self.conf))
 
     def createGUI(self):
         if self.livecdMode:
