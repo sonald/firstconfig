@@ -30,6 +30,8 @@ import traceback
 from firstconfig import frontend
 from firstconfig import interface
 
+from firstconfig.constants import *
+
 
 def exception_handler(type, value, tb):
     fd, path = tempfile.mkstemp(prefix='firstconfig-', suffix='.trace')
@@ -63,8 +65,11 @@ if __name__ == '__main__':
                     sys.exit(0)
 
     # dirty check: if runs sony iso, disable frontend showup
-    if os.path.exists('/etc/sony-release'):
-        sys.exit(0)
+    if livecdMode and os.path.exists(RF_CONF):
+        with open(RF_CONF) as fobj:
+            for line in fobj:
+                if line.strip() == 'RF_FULLDISK=3':
+                    sys.exit(0)
 
     afrontend = None
     if 'DISPLAY' not in os.environ:
