@@ -8,8 +8,9 @@ data_files = [('/usr/sbin', ['rffirstconfig']),
         ('/usr/share/firstconfig/data/', glob('data/*.html')),
         ('/usr/share/firstconfig/data/css', glob('data/css/*.*')),
         ('/usr/share/firstconfig/data/js', glob('data/js/*.js')),
+        ('/usr/share/firstconfig/data/messages', glob('data/messages/*.*')),
         ('/usr/share/firstconfig/data/licenses', glob('data/licenses/*.html')),
-        ('/usr/share/firstconfig/data/scripts', glob('data/scripts/*.sh'))]
+        ('/usr/share/firstconfig/data/scripts', glob('data/scripts/*.*'))]
 
 setup(name='firstconfig', version='0.1.0',
         description='Post-installation configuration utility',

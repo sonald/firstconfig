@@ -4,12 +4,16 @@
 # Author(s):  Sian Cao <sycao@redflag-linux.com>
 #
 
-MODE_REGULAR  = 1
+MODE_REGULAR = 1
 MODE_RECONFIG = 2
 
 RESULT_FAILURE = 0
 RESULT_SUCCESS = 1
 RESULT_JUMP = 2
+
+# this used to build ui components and determine what actually needs to be done
+# in the script.
+RF_CONF = "/etc/hippo.conf"
 
 BASEDIR = "/usr/share/firstconfig/"
 
