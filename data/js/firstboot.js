@@ -205,7 +205,7 @@ $(function() {
         }
 
         if (uicomps.RF_EXTENDED) {
-            firstcfg.options.extended = uicomps.RF_EXTENDED;
+            firstcfg.options.extended = '1';
         }
 
         if (uicomps.RF_LANG) {

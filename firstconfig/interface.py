@@ -61,7 +61,7 @@ class ConfigHost(QObject):
             if opts.get('keybaord'):
                 env['HIPPO_KEYBOARD'] = opts['keyboard']
 
-        if self.isOemMode():
+        if self.isOemMode()['status']:
             env['HIPPO_OEM'] = 'true'
 
         if self.interface.livecdMode:
@@ -140,29 +140,30 @@ class Interface:
 
     def loadrcconf(self):
         self.conf = {
-            'RF_FULLDISK': False,
-            'RF_LANG': False,
-            'RF_RFLICENSE': False,
-            'RF_HWLICENSE': False,
-            'RF_TIMEZONE': False,
-            'RF_KEYBOARD': False,
-            'RF_USERNAME': False,
-            'RF_PASSWD': False,
-            'RF_HOSTNAME': False,
-            'RF_EXTENDED': False
+            'RF_FULLDISK': '2',
+            'RF_LANG': True,
+            'RF_RFLICENSE': True,
+            'RF_HWLICENSE': True,
+            'RF_TIMEZONE': True,
+            'RF_KEYBOARD': True,
+            'RF_USERNAME': True,
+            'RF_PASSWD': True,
+            'RF_HOSTNAME': True,
+            'RF_EXTENDED': True
         }
         if not os.path.exists('/etc/hippo.conf'):
             return
 
         with open(RF_CONF) as conffile:
             for line in conffile:
-                k, v = line.strip().split('=')
-                if v == '0':
-                    v = False
-                elif v == '1':
-                    v = True
+                if line.startswith('#'):
+                    continue
 
-                self.conf[k] = v
+                k, v = line.strip().split('=')
+                if k == ['RF_LANG', 'RF_FULLDISK']:
+                    self.conf[k] = v
+                else:
+                    self.conf[k] = False
 
         log.debug('load hippo.conf %s', str(self.conf))
 

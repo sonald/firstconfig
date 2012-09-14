@@ -3,9 +3,9 @@
 # this script is used to modify system configurations according to env variables
 # passed  to it
 
-exec &>/var/log/firstboot.log
+exec &>/tmp/firstboot.log
 echo "firstboot setup start"
-
+env
 if [ x$HIPPO_TESTMODE == x1 ]; then
 	echo "firstboot done (test mode)"
 	exit 0
