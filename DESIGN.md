@@ -21,6 +21,8 @@ RF_HWLICENSE
 RF_USERNAME
 RF_PASSWD
 RF_HOSTNAME
-RF_EXTENDED：为1表示需要在firstconfig中进行分区操作
+
+下面一项必须存在：
+RF_EXTENDED：primary表示建主分区，logical建逻辑分区，free不建分区。
 
 如果某个可选项存在则表示firstconfig不需要设置，不存在或注释就设置。

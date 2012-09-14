@@ -3,7 +3,7 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION",
          "Report-Msgid-Bugs-To": " ",
-         "POT-Creation-Date": " 2012-09-11 17:26+0800",
+         "POT-Creation-Date": " 2012-09-15 09:33+0800",
          "PO-Revision-Date": " YEAR-MO-DA HO:MI+ZONE",
          "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
          "Language-Team": " LANGUAGE <LL@li.org>",
@@ -22,6 +22,14 @@
       "Start Journey →": [
          null,
          "开始旅程 →"
+      ],
+      "Welcome to first config": [
+         null,
+         "欢迎使用初次启动配置"
+      ],
+      "Agree": [
+         null,
+         "同意"
       ],
       "Timezone:": [
          null,
@@ -42,10 +50,6 @@
       "Hostname:": [
          null,
          "主机名："
-      ],
-      "Agree": [
-         null,
-         "同意"
       ],
       "username is empty or invalid": [
          null,

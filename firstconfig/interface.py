@@ -43,7 +43,7 @@ class ConfigHost(QObject):
 
         if not self.interface.livecdMode:
             if opts.get('extended'):
-                env['HIPPO_EXTENDED'] = '1'
+                env['HIPPO_EXTENDED'] = opts['extended']
 
             if opts.get('fulldisk'):
                 env['HIPPO_FULLDISK'] = opts['fulldisk']
@@ -60,9 +60,6 @@ class ConfigHost(QObject):
 
             if opts.get('keybaord'):
                 env['HIPPO_KEYBOARD'] = opts['keyboard']
-
-        if self.isOemMode()['status']:
-            env['HIPPO_OEM'] = 'true'
 
         if self.interface.livecdMode:
             env['HIPPO_LIVECD'] = '1'
@@ -95,12 +92,6 @@ class ConfigHost(QObject):
             "LANG": os.getenv('LANG')
         }
 
-    # right now only use oem license path to determine if it's OEM or not
-    def isOemMode(self, opts={}):
-        return {
-        "status": os.path.exists(OEM_LICENSES_PATH)
-        }
-
     def getUIComponents(self, opts={}):
         return self.interface.conf
 
@@ -114,7 +105,6 @@ class ConfigHost(QObject):
             "send": self.sendScript,
             "validate": self.validate,
             "systemLang": self.getSystemLang,
-            "oemMode": self.isOemMode,
             "uicomponents": self.getUIComponents
         }
 
@@ -149,7 +139,7 @@ class Interface:
             'RF_USERNAME': True,
             'RF_PASSWD': True,
             'RF_HOSTNAME': True,
-            'RF_EXTENDED': True
+            'RF_EXTENDED': 'free'
         }
         if not os.path.exists('/etc/hippo.conf'):
             return
@@ -160,7 +150,7 @@ class Interface:
                     continue
 
                 k, v = line.strip().split('=')
-                if k in ['RF_LANG', 'RF_FULLDISK']:
+                if k in ['RF_LANG', 'RF_FULLDISK', 'RF_EXTENDED']:
                     self.conf[k] = v
                 else:
                     self.conf[k] = False
