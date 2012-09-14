@@ -141,7 +141,7 @@ class Interface:
     def loadrcconf(self):
         self.conf = {
             'RF_FULLDISK': '2',
-            'RF_LANG': True,
+            'RF_LANG': False,
             'RF_RFLICENSE': True,
             'RF_HWLICENSE': True,
             'RF_TIMEZONE': True,
@@ -160,7 +160,7 @@ class Interface:
                     continue
 
                 k, v = line.strip().split('=')
-                if k == ['RF_LANG', 'RF_FULLDISK']:
+                if k in ['RF_LANG', 'RF_FULLDISK']:
                     self.conf[k] = v
                 else:
                     self.conf[k] = False
