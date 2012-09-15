@@ -114,7 +114,11 @@
 
                 console.log(res);
                 if (res.status === false) {
-                    return res;
+                    return {
+                        status: false,
+                        entry: 'username',
+                        reason: gettext('user already exists')
+                    };
                 }
             }
 

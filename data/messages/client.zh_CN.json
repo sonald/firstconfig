@@ -3,7 +3,7 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION",
          "Report-Msgid-Bugs-To": " ",
-         "POT-Creation-Date": " 2012-09-15 09:33+0800",
+         "POT-Creation-Date": " 2012-09-16 03:25+0800",
          "PO-Revision-Date": " YEAR-MO-DA HO:MI+ZONE",
          "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
          "Language-Team": " LANGUAGE <LL@li.org>",
@@ -54,6 +54,10 @@
       "username is empty or invalid": [
          null,
          "用户名为空或者无效"
+      ],
+      "user already exists": [
+         null,
+         "用户已经存在"
       ],
       "passwd does not match": [
          null,
