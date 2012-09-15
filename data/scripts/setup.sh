@@ -70,33 +70,33 @@ if [ -n "$HIPPO_USERNAME" ]; then
 	fi
 fi
 
-# do create a whole logical partition for OEM
-if [ -n "$HIPPO_OEM" ]; then
-	if [ x"$HIPPO_FULLDISK" == x3 ]; then
-		sony=1
-	fi
 
+# handling post install disk partitioning
+if [ "$HIPPO_EXTENDED" == "free" ]; then
+	echo "firstboot setup finished"
+	exit 0
+fi
 
-	destdisk='/dev/sda'
+destdisk='/dev/sda'
 
-	# check disk type
-	disktype=$( parted -s -m $destdisk p  |awk -F: 'NR==2 {print $6}' )
-	if [[ x"$disktype" != xmsdos ]]; then
-		echo "DEBUG: $destdisk is not a msdos type disk"
+# check disk type
+disktype=$( parted -s -m $destdisk p  |awk -F: 'NR==2 {print $6}' )
+if [[ x"$disktype" != xmsdos ]]; then
+	echo "DEBUG: $destdisk is not a msdos type disk"
+	exit 0
+fi
+
+if [ "$HIPPO_EXTENDED" == "primary" ]; then
+	prim_cnt=$( parted -s $destdisk p | grep primary | wc -l )
+	if [ $prim_cnt -eq 4 ]; then
+		echo "DEBUG: $destdisk has 4 primaries"
 		exit 0
 	fi
 
-	if [ x$sony == x1 ]; then
-		prim_cnt=$( parted -s $destdisk p | grep primary | wc -l )
-		if [ $prim_cnt -eq 4 ]; then
-			echo "DEBUG: $destdisk has 4 primaries"
-			exit 0
-		fi
+	begin=$( parted -s -m $destdisk unit MB p  |awk -F: 'END { sub("MB", "", $3); print $3 }' )
+	parted -s -m $destdisk unit MB mkpart primary $((begin + 1)) 100%
 
-		begin=$( parted -s -m $destdisk unit MB p  |awk -F: 'END { sub("MB", "", $3); print $3 }' )
-		parted -s -m $destdisk unit MB mkpart primary $((begin + 1)) 100%
-
-	else
+elif [ "$HIPPO_EXTENDED" == "logical" ]; then
 		# lenovo
 
 		do_make_extended=0
@@ -110,12 +110,12 @@ if [ -n "$HIPPO_OEM" ]; then
 		if [ x$do_make_extended == x1 ]; then
 			begin=$( parted -s -m $destdisk unit MB p  |awk -F: 'END { sub("MB", "", $3); print $3 }' )
 
-		# now create it!
-		parted $destdisk unit MB mkpart extended $((begin + 1)) 100%
-		parted -s -m $destdisk unit MB mkpart logical $((begin + 2)) 100%
+		    # now create it!
+		    parted $destdisk unit MB mkpart extended $((begin + 1)) 100%
+		    parted -s -m $destdisk unit MB mkpart logical $((begin + 2)) 100%
+		fi
 	fi
 fi
 
-fi
 
 echo "firstboot setup finished"

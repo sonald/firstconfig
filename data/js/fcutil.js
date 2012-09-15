@@ -131,10 +131,6 @@
             return remoteRequest( "systemLang" ).LANG;
         },
 
-        isOEM: function() {
-            return remoteRequest( "oemMode" ).status;
-        },
-
         uicomponents: function() {
             return remoteRequest( "uicomponents" );
         }

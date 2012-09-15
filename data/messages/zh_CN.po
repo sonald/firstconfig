@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 17:26+0800\n"
+"POT-Creation-Date: 2012-09-15 09:33+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,46 +20,50 @@ msgstr ""
 "X-Language: zh_CN\n"
 "X-Source-Language: C\n"
 
-#: livecd.html:25 firstboot.html:32
+#: livecd.html:25 firstboot.html:36
 msgid "Select a language"
 msgstr "选择语言"
 
-#: livecd.html:40 firstboot.html:98
+#: livecd.html:40 firstboot.html:129
 msgid "Start Journey →"
 msgstr "开始旅程 →"
 
-#: firstboot.html:52
-msgid "Timezone:"
-msgstr "时区:"
+#: firstboot.html:30
+msgid "Welcome to first config"
+msgstr "欢迎使用初次启动配置"
 
-#: firstboot.html:63
-msgid "Username:"
-msgstr "用户名："
-
-#: firstboot.html:71
-msgid "Password:"
-msgstr "密码："
-
-#: firstboot.html:79
-msgid "Again:"
-msgstr "再次输入密码："
-
-#: firstboot.html:89
-msgid "Hostname:"
-msgstr "主机名："
-
-#: firstboot.html:116
+#: firstboot.html:61 firstboot.html:75
 msgid "Agree"
 msgstr "同意"
 
-#: js/fcutil.js:95
+#: firstboot.html:83
+msgid "Timezone:"
+msgstr "时区:"
+
+#: firstboot.html:94
+msgid "Username:"
+msgstr "用户名："
+
+#: firstboot.html:102
+msgid "Password:"
+msgstr "密码："
+
+#: firstboot.html:110
+msgid "Again:"
+msgstr "再次输入密码："
+
+#: firstboot.html:120
+msgid "Hostname:"
+msgstr "主机名："
+
+#: js/fcutil.js:106
 msgid "username is empty or invalid"
 msgstr "用户名为空或者无效"
 
-#: js/firstboot.js:153
+#: js/firstboot.js:188
 msgid "passwd does not match"
 msgstr "密码不匹配"
 
-#: js/firstboot.js:185
+#: js/firstboot.js:237
 msgid "you need to agree all licenses to continue"
 msgstr "您必须同意所有licenses才能继续"

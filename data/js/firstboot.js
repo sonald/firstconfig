@@ -101,7 +101,7 @@ $(function() {
             rf_handler.agree();
         }
 
-        if (uicomps.RF_HWLICENSE && firstcfg.isOEM()) {
+        if (uicomps.RF_HWLICENSE) {
             var oem_handler = registerLicenseHandler( $('#ui_oem_license') );
             oem_handler.disagree();
         }
@@ -122,7 +122,7 @@ $(function() {
                 'licenses/redflag_licence_' + lang_choice + '.html');
         }
 
-        if ( uicomps.RF_HWLICENSE && firstcfg.isOEM() ) {
+        if (uicomps.RF_HWLICENSE) {
             toggleLicenseFor('oem', 'oem/licence_' + lang_choice + '.html');
         }
 
@@ -204,9 +204,9 @@ $(function() {
             firstcfg.options.fulldisk = uicomps.RF_FULLDISK;
         }
 
-        if (uicomps.RF_EXTENDED) {
-            firstcfg.options.extended = '1';
-        }
+
+        firstcfg.options.extended = uicomps.RF_EXTENDED;
+
 
         if (uicomps.RF_LANG) {
             firstcfg.options.lang = uicomps.RF_LANG;
