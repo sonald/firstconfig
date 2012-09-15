@@ -192,7 +192,7 @@ $(function() {
 
     if (uicomps.RF_HOSTNAME) {
         //hostname
-        controlMap.hostname.val('-redflag');
+        controlMap.hostname.val('-host');
     }
 
     // start journey: check all necessary fields and submit results
