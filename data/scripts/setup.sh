@@ -43,6 +43,7 @@ fi
 if [ -n "$HIPPO_HOSTNAME" ]; then
 	## hostname
 	echo $HIPPO_HOSTNAME > /etc/hostname
+    hostname $HIPPO_HOSTNAME
 fi
 
 if [ -n "$HIPPO_TIMEZONE" ]; then
