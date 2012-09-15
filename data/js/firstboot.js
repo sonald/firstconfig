@@ -227,6 +227,10 @@ $(function() {
         if (uicomps.RF_USERNAME) {
             firstcfg.options.username = controlMap.username.val();
             firstcfg.options.passwd = controlMap.passwd.val();
+            if (controlMap.passwd.val() !== controlMap.passwdAgain.val()) {
+                firstcfg.notify( controlMap.passwdAgain, firstcfg.i18n.gettext("passwd does not match") );
+                return false;
+            }
         }
 
         function checkLicense(ui) {

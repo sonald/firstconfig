@@ -83,8 +83,18 @@ class ConfigHost(QObject):
         return res
 
     def validate(self, opts={}):
+        ret = True
+
+        preserved = []
+        with open('/etc/passwd') as f:
+            for line in f:
+                preserved.append(line.split(':')[0])
+
+        if opts.get('entry') and opts['entry'] == 'username':
+            ret = not (opts['value'] in preserved)
+
         return {
-            "status": True
+            "status": ret
         }
 
     def getSystemLang(self, opts={}):

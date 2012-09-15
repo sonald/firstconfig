@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-15 09:33+0800\n"
+"POT-Creation-Date: 2012-09-16 03:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,39 +17,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: livecd.html:25 firstboot.html:36
+#: livecd.html:25 firstboot.html:40
 msgid "Select a language"
 msgstr ""
 
-#: livecd.html:40 firstboot.html:129
+#: livecd.html:40 firstboot.html:133
 msgid "Start Journey →"
 msgstr ""
 
-#: firstboot.html:30
+#: firstboot.html:32
 msgid "Welcome to first config"
 msgstr ""
 
-#: firstboot.html:61 firstboot.html:75
+#: firstboot.html:65 firstboot.html:79
 msgid "Agree"
 msgstr ""
 
-#: firstboot.html:83
+#: firstboot.html:87
 msgid "Timezone:"
 msgstr ""
 
-#: firstboot.html:94
+#: firstboot.html:98
 msgid "Username:"
 msgstr ""
 
-#: firstboot.html:102
+#: firstboot.html:106
 msgid "Password:"
 msgstr ""
 
-#: firstboot.html:110
+#: firstboot.html:114
 msgid "Again:"
 msgstr ""
 
-#: firstboot.html:120
+#: firstboot.html:124
 msgid "Hostname:"
 msgstr ""
 
@@ -57,10 +57,14 @@ msgstr ""
 msgid "username is empty or invalid"
 msgstr ""
 
-#: js/firstboot.js:188
+#: js/fcutil.js:120
+msgid "user already exists"
+msgstr ""
+
+#: js/firstboot.js:188 js/firstboot.js:231
 msgid "passwd does not match"
 msgstr ""
 
-#: js/firstboot.js:237
+#: js/firstboot.js:241
 msgid "you need to agree all licenses to continue"
 msgstr ""
