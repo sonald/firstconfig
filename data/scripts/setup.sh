@@ -117,6 +117,10 @@ fi
 
 destdisk='/dev/sda'
 
+function getBeginOfLast() {
+	echo $( parted -s -m $destdisk unit MB p  |awk -F: 'END { sub("MB", "", $3); print $3 }' )
+}
+
 # check disk type
 disktype=$( parted -s -m $destdisk p  |awk -F: 'NR==2 {print $6}' )
 if [[ x"$disktype" != xmsdos ]]; then
@@ -131,8 +135,10 @@ if [ "$HIPPO_EXTENDED" == "primary" ]; then
 		exit 0
 	fi
 
-	begin=$( parted -s -m $destdisk unit MB p  |awk -F: 'END { sub("MB", "", $3); print $3 }' )
+	begin=$( getBeginOfLast )
 	parted -s -m $destdisk unit MB mkpart primary $((begin + 1)) 100%
+
+	[ $? -eq 0 ] && do_mkfs=mkfs.ext3
 
 elif [ "$HIPPO_EXTENDED" == "logical" ]; then
 	# lenovo
@@ -146,14 +152,22 @@ elif [ "$HIPPO_EXTENDED" == "logical" ]; then
 	fi
 
 	if [ x$do_make_extended == x1 ]; then
-		begin=$( parted -s -m $destdisk unit MB p  |awk -F: 'END { sub("MB", "", $3); print $3 }' )
+		begin=$( getBeginOfLast )
 
 	    # now create it!
 	    parted $destdisk unit MB mkpart extended $((begin + 1)) 100%
 	    parted -s -m $destdisk unit MB mkpart logical $((begin + 2)) 100%
+
+	    [ $? -eq 0 ] && do_mkfs=mkfs.ext4
 	fi
 fi
 
+if [ -n "$do_mkfs" ]; then
+	# format created partition, it MUST be the last partition
+	last_part=$( parted -s -m $destdisk p | awk -F: 'END {print $1}' )
+	part=${destdisk}${last_part}
+	[ -b "$part" ] && $do_mkfs -q $part
+fi
 
 echo "firstboot setup finished"
 exit 0
