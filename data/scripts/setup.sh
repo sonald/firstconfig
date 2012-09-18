@@ -26,16 +26,53 @@ if [ -n "$HIPPO_LANG" ]; then
 			sed -i 's/Pictures/图片/g' /etc/skel/.config/user-dirs.dirs
 			sed -i 's/Videos/视频/g' /etc/skel/.config/user-dirs.dirs
 			mkdir -v -p /etc/skel/{桌面,文档,下载,音乐,图片,视频}
+            pushd /etc/skel/桌面/
+            ln -s ../{文档,下载,音乐,图片,视频} .
+            popd
+            PIC="图片"
+        
 		else
 			mkdir -v -p /etc/skel/{Desktop,Documents,Downloads,Music,Pictures,Videos}
+            pushd /etc/skel/Desktop/
+            ln -s ../{Documents,Downloads,Music,Pictures,Videos} .
+            popd
+            PIC="Pictures"
 			sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/activitymanagerrc
 			sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/plasma-desktop-appletsrc
 		fi
+            cat << _EOF >> /etc/skel/${PIC}/.directory
+[Dolphin]
+PreviewsShown=true
+Timestamp=3000,1,1,0,0,0
+_EOF
+
 	fi
 
 fi
 
 if [ -n "$HIPPO_LIVECD" ]; then
+    # gdm
+    test -f /etc/gdm/custom.conf && sed '/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=qomo' -i /etc/gdm/custom.conf
+    ## kdmrc
+    test -f /usr/share/config/kdm/kdmrc &&  sed -i -e 's/.*AutoLoginEnable.*/AutoLoginEnable=true/g'\
+        -e 's/.*AutoLoginUser.*/AutoLoginUser=qomo/g' \
+        -e 's/.*AllowNullPasswd.*/AllowNullPasswd=true/g'  /usr/share/config/kdm/kdmrc
+
+    ## 安装程序到桌面
+    rm -fr /usr/share/apps/kio_desktop/*
+    cat << _EOF >> /home/qomo/.kde4/share/config/plasma-desktop-appletsrc  
+[Containments][8][Applets][23]  
+geometry=30,30,100,100  
+immutability=1  
+plugin=icon  
+zvalue=0  
+
+[Containments][8][Applets][23][Configuration]  
+Url=file:///usr/share/applications/qomoinstaller.desktop  
+_EOF
+
+	useradd -m -g users -G wheel,video,audio,adm,lp  installer
+    passwd -d installer
 	echo "firstboot setup finished"
 	exit 0
 fi
