@@ -14,6 +14,7 @@ fi
 if [ -n "$HIPPO_LANG" ]; then
 	echo "export LANG=${HIPPO_LANG}" > /etc/skel/.xprofile
 
+    DISKTOP="NULL_DIR"
 	## kde
 	if [ -f /usr/share/config/kdm/kdmrc ]; then
 		sed -i "s/^#Language.*/Language=`echo ${HIPPO_LANG}| cut -d . -f 1`/g" /usr/share/config/kdm/kdmrc
@@ -22,21 +23,16 @@ if [ -n "$HIPPO_LANG" ]; then
 			sed -i 's/Desktop/桌面/g' /etc/skel/.config/user-dirs.dirs
 			sed -i 's/Documents/文档/g' /etc/skel/.config/user-dirs.dirs
 			sed -i 's/Downloads/下载/g' /etc/skel/.config/user-dirs.dirs
-			sed -i 's/Music/音乐/g' /etc/skel/.config/user-dirs.dirs
+			sed -i 's/Media/多媒体/g' /etc/skel/.config/user-dirs.dirs
 			sed -i 's/Pictures/图片/g' /etc/skel/.config/user-dirs.dirs
-			sed -i 's/Videos/视频/g' /etc/skel/.config/user-dirs.dirs
 			mkdir -v -p /etc/skel/{桌面,文档,下载,音乐,图片,视频}
-            pushd /etc/skel/桌面/
-            ln -s ../{文档,下载,音乐,图片,视频} .
-            popd
             PIC="图片"
         
+            DISKTOP="桌面"
 		else
 			mkdir -v -p /etc/skel/{Desktop,Documents,Downloads,Music,Pictures,Videos}
-            pushd /etc/skel/Desktop/
-            ln -s ../{Documents,Downloads,Music,Pictures,Videos} .
-            popd
             PIC="Pictures"
+            DISKTOP="Desktop"
 			sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/activitymanagerrc
 			sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/plasma-desktop-appletsrc
 		fi
@@ -46,21 +42,29 @@ PreviewsShown=true
 Timestamp=3000,1,1,0,0,0
 _EOF
 
+            pushd /etc/skel/${DISKTOP}/
+            ln -s /usr/share/applications/firefox.desktop .
+            popd
 	fi
 
 fi
 
 if [ -n "$HIPPO_LIVECD" ]; then
+
+    LIVECD_USER="installer"
+
+    useradd -m -g users -G wheel,video,audio,adm,lp ${LIVECD_USER}
+    passwd -d ${LIVECD_USER}
     # gdm
-    test -f /etc/gdm/custom.conf && sed '/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=installer' -i /etc/gdm/custom.conf
+    test -f /etc/gdm/custom.conf && sed "s/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=${LIVECD_USER}" -i /etc/gdm/custom.conf
     ## kdmrc
     test -f /usr/share/config/kdm/kdmrc &&  sed -i -e 's/.*AutoLoginEnable.*/AutoLoginEnable=true/g'\
-        -e 's/.*AutoLoginUser.*/AutoLoginUser=installer/g' \
+        -e "s/.*AutoLoginUser.*/AutoLoginUser=${LIVECD_USER}/g" \
         -e 's/.*AllowNullPasswd.*/AllowNullPasswd=true/g'  /usr/share/config/kdm/kdmrc
 
     ## 安装程序到桌面
-    test -d /usr/share/apps/kio_desktop rm -fr /usr/share/apps/kio_desktop/*
-    test -f /etc/skel/.kde4/share/config/plasma-desktop-appletsrc && \
+    test -d /home/${LIVECD_USER}/${DISKTOP} &&  rm -f /usr/share/apps/kio_desktop/* &&  rm -fr /home/${LIVECD_USER}/${DISKTOP}/*
+    test -f /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc && \
     cat << _EOF >> /etc/skel/.kde4/share/config/plasma-desktop-appletsrc  
 [Containments][8][Applets][23]  
 geometry=30,30,100,100  
@@ -72,8 +76,6 @@ zvalue=0
 Url=file:///usr/share/applications/qomoinstaller.desktop  
 _EOF
 
-	useradd -m -g users -G wheel,video,audio,adm,lp  installer
-    passwd -d installer
 	echo "firstboot setup finished"
 	exit 0
 fi
