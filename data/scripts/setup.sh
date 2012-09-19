@@ -52,15 +52,16 @@ fi
 
 if [ -n "$HIPPO_LIVECD" ]; then
     # gdm
-    test -f /etc/gdm/custom.conf && sed '/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=qomo' -i /etc/gdm/custom.conf
+    test -f /etc/gdm/custom.conf && sed '/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=installer' -i /etc/gdm/custom.conf
     ## kdmrc
     test -f /usr/share/config/kdm/kdmrc &&  sed -i -e 's/.*AutoLoginEnable.*/AutoLoginEnable=true/g'\
-        -e 's/.*AutoLoginUser.*/AutoLoginUser=qomo/g' \
+        -e 's/.*AutoLoginUser.*/AutoLoginUser=installer/g' \
         -e 's/.*AllowNullPasswd.*/AllowNullPasswd=true/g'  /usr/share/config/kdm/kdmrc
 
     ## 安装程序到桌面
-    rm -fr /usr/share/apps/kio_desktop/*
-    cat << _EOF >> /home/qomo/.kde4/share/config/plasma-desktop-appletsrc  
+    test -d /usr/share/apps/kio_desktop rm -fr /usr/share/apps/kio_desktop/*
+    test -f /etc/skel/.kde4/share/config/plasma-desktop-appletsrc && \
+    cat << _EOF >> /etc/skel/.kde4/share/config/plasma-desktop-appletsrc  
 [Containments][8][Applets][23]  
 geometry=30,30,100,100  
 immutability=1  
