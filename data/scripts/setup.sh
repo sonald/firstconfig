@@ -25,18 +25,12 @@ if [ -n "$HIPPO_LANG" ]; then
 			sed -i 's/Downloads/下载/g' /etc/skel/.config/user-dirs.dirs
 			sed -i 's/Media/多媒体/g' /etc/skel/.config/user-dirs.dirs
 			sed -i 's/Pictures/图片/g' /etc/skel/.config/user-dirs.dirs
-			mkdir -v -p /etc/skel/{桌面,文档,下载,多媒体,图片}
-            pushd /etc/skel/桌面/
-            ln -s ../{文档,下载,多媒体,图片} .
-            popd
+			mkdir -v -p /etc/skel/{桌面,文档,下载,音乐,图片,视频}
             PIC="图片"
-            DISKTOP="桌面"
         
+            DISKTOP="桌面"
 		else
-			mkdir -v -p /etc/skel/{Desktop,Documents,Downloads,Media,Pictures}
-            pushd /etc/skel/Desktop/
-            ln -s ../{Documents,Downloads,Media,Pictures} .
-            popd
+			mkdir -v -p /etc/skel/{Desktop,Documents,Downloads,Music,Pictures,Videos}
             PIC="Pictures"
             DISKTOP="Desktop"
 			sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/activitymanagerrc
