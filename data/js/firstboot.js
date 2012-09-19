@@ -60,7 +60,7 @@ $(function() {
     console.log(uicomps);
     setupUI(uicomps);
 
-    var sys_lang = uicomps.RF_LANG ? uicomps.RF_LANG : firstcfg.systemLang();
+    var sys_lang = uicomps.RF_LANG ? uicomps.RF_LANG : 'zh_CN.UTF-8';
 
     function toggleLicenseFor(vendor, src) {
         var $license = $( '#ui_' + vendor + '_license' );
