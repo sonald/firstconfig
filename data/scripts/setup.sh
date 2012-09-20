@@ -51,6 +51,10 @@ fi
 
 if [ -n "$HIPPO_LIVECD" ]; then
 
+    # ping
+    setcap cap_net_raw=ep /usr/bin/ping
+    setcap cap_net_raw=ep /usr/bin/ping6
+
     LIVECD_USER="installer"
 
     useradd -m -g users -G wheel,video,audio,adm,lp ${LIVECD_USER}
