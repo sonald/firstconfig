@@ -69,7 +69,7 @@ if [ -n "$HIPPO_LIVECD" ]; then
         -e 's/.*AllowNullPasswd.*/AllowNullPasswd=true/g'  /usr/share/config/kdm/kdmrc
 
     ## 安装程序到桌面
-    test -d /home/${LIVECD_USER}/${DISKTOP} &&  rm -f /usr/share/apps/kio_desktop/* &&  rm -fr /home/${LIVECD_USER}/${DISKTOP}/*
+    test -d /home/${LIVECD_USER}/${DISKTOP} &&  rm -rf /usr/share/apps/kio_desktop/* &&  rm -fr /home/${LIVECD_USER}/${DISKTOP}/*
     test -f /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc && \
     cat << _EOF >> /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc  
 [Containments][8][Applets][23]  
