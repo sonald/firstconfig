@@ -54,7 +54,8 @@ $(function() {
         firstcfg.loadTranslation(lang_choice);
     });
 
-
+    // force zh_CN as default
+    sys_lang = 'zh_CN.UTF-8';
     $('tr[data-locale="' + sys_lang + '"]').trigger('click');
 
     $('#start').bind('click', function() {
