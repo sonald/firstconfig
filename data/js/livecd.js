@@ -30,25 +30,18 @@ $(function() {
     adjustMargin();
 
     var $langs = $('#languages');
-    $langs.on('mouseover', 'tr', function() {
-        $(this).addClass('success');
-    });
 
-    $langs.on('mouseout', 'tr', function() {
-        $(this).removeClass('success');
-    });
-
-    $langs.on('click', 'tr', function() {
-        $langs.find('.info').removeClass('info');
-        $(this).toggleClass('info');
-        $(this).trigger('languageChanged.livecd');
+    $langs.on('click', 'input[type=radio]', function() {
+        setTimeout(function() {
+            $('body').trigger('languageChanged.livecd');
+        }, 0);
     });
 
     var sys_lang = firstcfg.systemLang();
 
-    $('#languages').on('languageChanged.livecd', function() {
+    $('body').on('languageChanged.livecd', function() {
         console.log('switch ui');
-        var locale_choice = $langs.find('tr.info').data('locale');
+        var locale_choice = $langs.find('input:checked').val();
         var lang_choice = /(\S+_[^.]+)(\..*)?/.exec(locale_choice)[1];
 
         firstcfg.loadTranslation(lang_choice);
@@ -56,12 +49,12 @@ $(function() {
 
     // force zh_CN as default
     sys_lang = 'zh_CN.UTF-8';
-    $('tr[data-locale="' + sys_lang + '"]').trigger('click');
+    $('input[value="' + sys_lang + '"]').trigger('click');
 
     $('#start').bind('click', function() {
         // collect configs
         firstcfg.options.mode = "livecd";
-        firstcfg.options.lang = $langs.find('tr.info').data('locale');
+        firstcfg.options.lang = $langs.find('input:checked').val();
 
         var res = firstcfg.validate();
         console.log(res);

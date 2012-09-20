@@ -64,57 +64,18 @@ $(function() {
 
     function toggleLicenseFor(vendor, src) {
         var $license = $( '#ui_' + vendor + '_license' );
-        //var tmpl = document.querySelector('#license_template').innerHTML;
-        //$license.html( tmpl.replace('%1', src) );
         $license.find('iframe').attr('src', src);
         return $license;
     }
 
-    // license handling
-    function registerLicenseHandler(host) {
-        var $btn = host.find('.mycheckbox');
-
-        var controller = {
-            agree: function() {
-                $btn.addClass('checked');
-            },
-
-            disagree: function() {
-                $btn.removeClass('checked');
-            },
-
-            toggle: function() {
-                $btn.toggleClass('checked');
-            }
-        };
-
-        host.on('click', '.mycheckbox', function() {
-            controller.toggle();
-        });
-
-        return controller;
-    }
-
-    function setupLicenseHandlers() {
-        if (uicomps.RF_RFLICENSE) {
-            var rf_handler = registerLicenseHandler( $('#ui_redflag_license') );
-            rf_handler.agree();
-        }
-
-        if (uicomps.RF_HWLICENSE) {
-            var oem_handler = registerLicenseHandler( $('#ui_oem_license') );
-            oem_handler.disagree();
-        }
-    }
-
-    setupLicenseHandlers();
-
     $('body').on('languageChanged.firstboot', function() {
         // RF_LANG exists, use sys_lang as default
         var locale_choice = sys_lang;
+
         if (!uicomps.RF_LANG) {
-            locale_choice = $langs.find('tr.info').data('locale');
+            locale_choice = controlMap.lang.find('input:checked').val();
         }
+
         var lang_choice = /(\S+_[^.]+)(\..*)?/.exec(locale_choice)[1];
 
         if (uicomps.RF_RFLICENSE) {
@@ -136,21 +97,14 @@ $(function() {
     } else {
         // languages
         var $langs = controlMap.lang;
-        $langs.on('mouseover', 'tr', function() {
-            $(this).addClass('success');
+
+        $langs.on('click', 'input[type=radio]', function() {
+            setTimeout(function() {
+                $('body').trigger('languageChanged.firstboot');
+            }, 0);
         });
 
-        $langs.on('mouseout', 'tr', function() {
-            $(this).removeClass('success');
-        });
-
-        $langs.on('click', 'tr', function() {
-            $langs.find('.info').removeClass('info');
-            $(this).toggleClass('info');
-            $('body').trigger('languageChanged.firstboot');
-        });
-
-        $('tr[data-locale="' + sys_lang + '"]').trigger('click');
+        $langs.find('[value="' + sys_lang + '"]').trigger('click');
     }
 
 
@@ -211,7 +165,7 @@ $(function() {
         if (uicomps.RF_LANG) {
             firstcfg.options.lang = uicomps.RF_LANG;
         } else {
-            firstcfg.options.lang = controlMap.lang.find('tr.info').data('locale');
+            firstcfg.options.lang = controlMap.lang.find('input:checked').val();
         }
 
         if (uicomps.RF_TIMEZONE) {
@@ -231,26 +185,6 @@ $(function() {
                 firstcfg.notify( controlMap.passwdAgain, firstcfg.i18n.gettext("passwd does not match") );
                 return false;
             }
-        }
-
-        function checkLicense(ui) {
-            var id = ui + ' .mycheckbox';
-            var licenseAgreed = $(id).hasClass('checked');
-            if (!licenseAgreed) {
-                firstcfg.notify( ui + ' b',
-                    firstcfg.i18n.gettext('you need to agree all licenses to continue' ));
-                return false;
-            }
-
-            return true;
-        }
-
-        if (uicomps.RF_RFLICENSE && !checkLicense('#ui_redflag_license')) {
-            return false;
-        }
-
-        if (uicomps.RF_HWLICENSE && !checkLicense('#ui_oem_license')) {
-            return false;
         }
 
         console.log('before validate: %s', JSON.stringify(firstcfg.options));
