@@ -43,6 +43,8 @@ Timestamp=3000,1,1,0,0,0
 _EOF
 
             pushd /etc/skel/${DISKTOP}/
+            cp /usr/share/apps/kio_desktop/DesktopLinks/Home.desktop .
+            cp /usr/share/apps/kio_desktop/directory.trash trash.desktop
             ln -s /usr/share/applications/firefox.desktop .
             popd
 	fi
@@ -69,7 +71,7 @@ if [ -n "$HIPPO_LIVECD" ]; then
     ## 安装程序到桌面
     test -d /home/${LIVECD_USER}/${DISKTOP} &&  rm -f /usr/share/apps/kio_desktop/* &&  rm -fr /home/${LIVECD_USER}/${DISKTOP}/*
     test -f /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc && \
-    cat << _EOF >> /etc/skel/.kde4/share/config/plasma-desktop-appletsrc  
+    cat << _EOF >> /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc  
 [Containments][8][Applets][23]  
 geometry=30,30,100,100  
 immutability=1  
