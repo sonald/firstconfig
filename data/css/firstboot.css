@@ -1,13 +1,12 @@
 html, body {
-    /*height: 100%;*/
+    height: 100%;
 }
 
 body {
-    background: -webkit-linear-gradient(top, #7C6353 70%, #948787);
-}
+    background: #363434;
+    background: rgba(36, 34, 34, 0.90);
+    /*background-image: url(texture2.jpg) ;*/
 
-.container-fluid {
-    height: 100%;
 }
 
 iframe {
@@ -15,13 +14,45 @@ iframe {
 }
 
 #content {
-    margin: 100px auto;
+    margin: 10px auto;
+
+}
+
+.mailbox {
+
+    background: #F5E6DD;
+    background-image:
+     -webkit-linear-gradient(left,
+        rgba(51, 41, 31, 0.4) 0%,
+        rgba(51, 41, 31, 0.3) 5%,
+        rgba(51, 41, 31, 0.2) 12%,
+        rgba(51, 41, 31, 0.0) 50%,
+        rgba(51, 41, 31, 0.2) 88%,
+        rgba(51, 41, 31, 0.3) 95%,
+        rgba(51, 41, 31, 0.4) 100%),
+    -webkit-linear-gradient(top,
+        rgba(51, 41, 31, 0.20) 0%,
+        rgba(51, 41, 31, 0.00) 20%,
+        rgba(51, 41, 31, 0.00) 50%,
+        rgba(51, 41, 31, 0.20) 88%,
+        rgba(51, 41, 31, 0.30) 95%,
+        rgba(51, 41, 31, 0.50) 100%);
+
+    padding: 20px;
+    border-radius: 20px;
+
 }
 
 .section {
-    border-bottom: 1px solid #977E7E;
-    margin: 20px 0 10px;
+    border-bottom: 1px solid rgba(51, 40, 30, 0.15);
+    /*margin: 10px 0 10px;*/
     padding: 10px 0 10px;
+}
+
+/* override bootstrap.css */
+.form-horizontal .control-group {
+    margin-bottom: 10px;
+
 }
 
 .table td {
@@ -30,7 +61,7 @@ iframe {
 
 .buttons {
     text-align: center;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 .mycheckbox {
