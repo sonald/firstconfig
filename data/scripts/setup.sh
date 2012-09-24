@@ -44,9 +44,7 @@ Timestamp=3000,1,1,0,0,0
 _EOF
 
 pushd /etc/skel/${DISKTOP}/
-cp /usr/share/apps/kio_desktop/DesktopLinks/Home.desktop .
-cp /usr/share/apps/kio_desktop/directory.trash trash.desktop
-ln -s /usr/share/applications/firefox.desktop .
+test -d /usr/share/desktop-kde && test "`ls /usr/share/desktop-kde`" && cp -a /usr/share/desktop-kde/* .
 popd
     fi
 
@@ -62,6 +60,8 @@ if [ -n "$HIPPO_LIVECD" ]; then
 
     useradd -m -g users -G wheel,video,audio,adm,lp ${LIVECD_USER}
     passwd -d ${LIVECD_USER}
+    sed  's/root\:[^:]*:/root\:!\:/g' -i /etc/shadow
+
     # gdm
     test -f /etc/gdm/custom.conf && sed "s/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=${LIVECD_USER}" -i /etc/gdm/custom.conf
     ## kdmrc
@@ -116,6 +116,7 @@ if [ -n "$HIPPO_USERNAME" ]; then
     else
         echo -e "${HIPPO_PASSWD}\n${HIPPO_PASSWD}" | passwd $HIPPO_USERNAME
     fi
+    sed  's/root\:[^:]*:/root\:!\:/g' -i /etc/shadow
 fi
 
 
