@@ -81,8 +81,11 @@ zvalue=0
 Url=file:///usr/share/applications/qomoinstaller.desktop  
 _EOF
 
-echo "firstboot setup finished"
-exit 0
+    ## sony livecd autostart
+    rpm -qa | grep -q sony-release && sed -i 's|Exec=.*|& -a -s|g' /usr/share/applications/qomoinstaller.desktop && ln -sf /usr/share/applications/qomoinstaller.desktop /etc/xdg/autostart
+    
+    echo "firstboot setup finished"
+    exit 0
 fi
 
 if [ -n "$HIPPO_HOSTNAME" ]; then
