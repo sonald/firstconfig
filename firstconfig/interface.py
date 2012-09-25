@@ -252,5 +252,22 @@ class Interface:
         self.window.showMaximized()
         self.app.exec_()
 
+    # used for livecd mode in oem
+    def headlessRun(self):
+        log.debug("headless run setup")
+        cfg = ConfigHost(self)
+        opts = {}
+        if self.conf.get('RF_LANG'):
+            opts['HIPPO_LANG'] = self.conf.get('RF_LANG')
+        else:
+            opts['HIPPO_LANG'] = "zh_CN.UTF-8"
+
+        opts['HIPPO_LIVECD'] = '1'
+
+        if self.testMode:
+            opts['HIPPO_TESTMODE'] = '1'
+
+        cfg.sendScript(opts)
+
     def stop(self):
         self.window.close()

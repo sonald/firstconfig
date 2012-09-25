@@ -64,24 +64,28 @@ if __name__ == '__main__':
                 if line.strip() == 'RUN_FIRSTBOOT=NO':
                     sys.exit(0)
 
+    headlessRunSetup = False
     # dirty check: if runs sony iso, disable frontend showup
     if livecdMode and os.path.exists(RF_CONF):
         with open(RF_CONF) as fobj:
             for line in fobj:
                 if line.strip() == 'RF_FULLDISK=3':
-                    sys.exit(0)
+                    headlessRunSetup = True
 
     afrontend = None
-    if 'DISPLAY' not in os.environ:
+    if (not headlessRunSetup) and 'DISPLAY' not in os.environ:
         afrontend = frontend.Frontend()
         afrontend.set_lang()
         afrontend.startx()
-        afrontend.start_wm()
+        #afrontend.start_wm()
         afrontend.merge_xres()
 
     intf = interface.Interface(livecdMode, opts.test)
-    intf.createGUI()
-    intf.run()
+    if headlessRunSetup:
+        intf.headlessRun()
+    else:
+        intf.createGUI()
+        intf.run()
 
     if afrontend is not None:
         afrontend.kill()
