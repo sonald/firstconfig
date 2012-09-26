@@ -257,33 +257,15 @@ class Interface:
         cfg = ConfigHost(self)
         opts = {}
         if self.conf.get('RF_LANG'):
-            opts['HIPPO_LANG'] = self.conf.get('RF_LANG')
+            opts['lang'] = self.conf.get('RF_LANG')
         else:
-            opts['HIPPO_LANG'] = "zh_CN.UTF-8"
+            opts['lang'] = "zh_CN.UTF-8"
 
-        opts['HIPPO_LIVECD'] = '1'
+        if self.conf.get('RF_EXTENDED'):
+            opts['extended'] = self.conf.get('RF_EXTENDED')
 
-        if self.conf.get('extended'):
-            opts['HIPPO_EXTENDED'] = self.conf.get['extended']
-
-        if self.conf.get('fulldisk'):
-            opts['HIPPO_FULLDISK'] = self.conf.get['fulldisk']
-
-        if self.conf.get('username'):
-            opts['HIPPO_USERNAME'] = self.conf.get['username']
-            opts['HIPPO_PASSWD'] = self.conf.get['passwd']
-
-        if self.conf.get('hostname'):
-            opts['HIPPO_HOSTNAME'] = self.conf.get['hostname']
-
-        if self.conf.get('timezone'):
-            opts['HIPPO_TIMEZONE'] = self.conf.get['timezone']
-
-        if self.conf.get('keybaord'):
-            opts['HIPPO_KEYBOARD'] = self.conf.get['keyboard']
-
-        if self.testMode:
-            opts['HIPPO_TESTMODE'] = '1'
+        if self.conf.get('RF_FULLDISK'):
+            opts['fulldisk'] = self.conf.get('RF_FULLDISK')
 
         cfg.sendScript(opts)
 
