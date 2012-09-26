@@ -41,25 +41,24 @@ class ConfigHost(QObject):
         if opts.get('lang'):
             env['HIPPO_LANG'] = opts['lang']
 
-        if not self.interface.livecdMode:
-            if opts.get('extended'):
-                env['HIPPO_EXTENDED'] = opts['extended']
+        if opts.get('extended'):
+            env['HIPPO_EXTENDED'] = opts['extended']
 
-            if opts.get('fulldisk'):
-                env['HIPPO_FULLDISK'] = opts['fulldisk']
+        if opts.get('fulldisk'):
+            env['HIPPO_FULLDISK'] = opts['fulldisk']
 
-            if opts.get('username'):
-                env['HIPPO_USERNAME'] = opts['username']
-                env['HIPPO_PASSWD'] = opts['passwd']
+        if opts.get('username'):
+            env['HIPPO_USERNAME'] = opts['username']
+            env['HIPPO_PASSWD'] = opts['passwd']
 
-            if opts.get('hostname'):
-                env['HIPPO_HOSTNAME'] = opts['hostname']
+        if opts.get('hostname'):
+            env['HIPPO_HOSTNAME'] = opts['hostname']
 
-            if opts.get('timezone'):
-                env['HIPPO_TIMEZONE'] = opts['timezone']
+        if opts.get('timezone'):
+            env['HIPPO_TIMEZONE'] = opts['timezone']
 
-            if opts.get('keybaord'):
-                env['HIPPO_KEYBOARD'] = opts['keyboard']
+        if opts.get('keybaord'):
+            env['HIPPO_KEYBOARD'] = opts['keyboard']
 
         if self.interface.livecdMode:
             env['HIPPO_LIVECD'] = '1'
@@ -263,6 +262,25 @@ class Interface:
             opts['HIPPO_LANG'] = "zh_CN.UTF-8"
 
         opts['HIPPO_LIVECD'] = '1'
+
+        if self.conf.get('extended'):
+            opts['HIPPO_EXTENDED'] = self.conf.get['extended']
+
+        if self.conf.get('fulldisk'):
+            opts['HIPPO_FULLDISK'] = self.conf.get['fulldisk']
+
+        if self.conf.get('username'):
+            opts['HIPPO_USERNAME'] = self.conf.get['username']
+            opts['HIPPO_PASSWD'] = self.conf.get['passwd']
+
+        if self.conf.get('hostname'):
+            opts['HIPPO_HOSTNAME'] = self.conf.get['hostname']
+
+        if self.conf.get('timezone'):
+            opts['HIPPO_TIMEZONE'] = self.conf.get['timezone']
+
+        if self.conf.get('keybaord'):
+            opts['HIPPO_KEYBOARD'] = self.conf.get['keyboard']
 
         if self.testMode:
             opts['HIPPO_TESTMODE'] = '1'
