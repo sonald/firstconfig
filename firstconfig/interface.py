@@ -130,7 +130,6 @@ class ConfigHost(QObject):
 
 class Interface:
     def __init__(self, livecdMode, testing=False):
-        self.app = QApplication(sys.argv)
         self.livecdMode = livecdMode
         self.testMode = testing
         self.loadrcconf()
@@ -167,6 +166,7 @@ class Interface:
         log.debug('load hippo.conf %s', str(self.conf))
 
     def createGUI(self):
+        self.app = QApplication(sys.argv)
         if self.livecdMode:
             self.greeter = self.createLiveCDUI()
         else:
