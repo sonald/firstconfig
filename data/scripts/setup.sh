@@ -14,7 +14,7 @@ fi
 if [ -n "$HIPPO_LANG" ]; then
     echo "export LANG=${HIPPO_LANG}" > /etc/skel/.xprofile
 
-    DISKTOP="NULL_DIR"
+    DESKTOP="NULL_DIR"
     ## kde
     if [ -f /usr/share/config/kdm/kdmrc ]; then
         sed -i "s/^#Language.*/Language=`echo ${HIPPO_LANG}| cut -d . -f 1`/g" /usr/share/config/kdm/kdmrc
@@ -29,11 +29,11 @@ if [ -n "$HIPPO_LANG" ]; then
             mkdir -v -p /etc/skel/{桌面,文档,下载,音乐,图片,视频}
             PIC="图片"
 
-            DISKTOP="桌面"
+            DESKTOP="桌面"
         else
             mkdir -v -p /etc/skel/{Desktop,Documents,Downloads,Music,Pictures,Videos}
             PIC="Pictures"
-            DISKTOP="Desktop"
+            DESKTOP="Desktop"
             sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/activitymanagerrc
             sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/plasma-desktop-appletsrc
         fi
@@ -43,7 +43,7 @@ PreviewsShown=true
 Timestamp=3000,1,1,0,0,0
 _EOF
 
-    test -d /etc/skel/${DISKTOP} && test -d /usr/share/desktop-kde && test "`ls /usr/share/desktop-kde`" && cp -a /usr/share/desktop-kde/* .
+    test -d /etc/skel/${DESKTOP} && test -d /usr/share/desktop-kde && test "`ls /usr/share/desktop-kde`" && cp -a /usr/share/desktop-kde/* /etc/skel/${DESKTOP}/
     fi
 
 fi
@@ -68,7 +68,7 @@ if [ -n "$HIPPO_LIVECD" ]; then
         -e 's/.*AllowNullPasswd.*/AllowNullPasswd=true/g'  /usr/share/config/kdm/kdmrc
 
     ## 安装程序到桌面
-    test -d /home/${LIVECD_USER}/${DISKTOP} &&  rm -rf /usr/share/apps/kio_desktop/* &&  rm -fr /home/${LIVECD_USER}/${DISKTOP}/*
+    test -d /home/${LIVECD_USER}/${DESKTOP} &&  rm -rf /usr/share/apps/kio_desktop/* &&  rm -fr /home/${LIVECD_USER}/${DESKTOP}/*
     test -f /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc && \
     cat << _EOF >> /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc  
 [Containments][8][Applets][23]  
