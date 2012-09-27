@@ -43,7 +43,7 @@ PreviewsShown=true
 Timestamp=3000,1,1,0,0,0
 _EOF
 
-    test -d /etc/skel/${DISKTOP} && test -d /usr/share/desktop-kde && test "`ls /usr/share/desktop-kde`" && cp -a /usr/share/desktop-kde/* .
+    test -d /etc/skel/${DISKTOP} && test -d /usr/share/desktop-kde && test "`ls /usr/share/desktop-kde`" && cp -a /usr/share/desktop-kde/* /etc/skel/${DISKTOP}/
     fi
 
 fi
