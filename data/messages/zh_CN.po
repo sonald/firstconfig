@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-21 08:36+0800\n"
+"POT-Creation-Date: 2012-10-09 14:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "X-Language: zh_CN\n"
 "X-Source-Language: C\n"
 
-#: livecd.html:25 firstboot.html:40
+#: livecd.html:27 firstboot.html:40
 msgid "Select a language"
 msgstr "选择语言"
 
-#: livecd.html:40 firstboot.html:134
+#: livecd.html:45 firstboot.html:117
 msgid "Start Journey →"
 msgstr "开始旅程 →"
 
@@ -32,30 +32,29 @@ msgstr "开始旅程 →"
 msgid "Welcome to first config"
 msgstr "欢迎使用初次启动配置"
 
-#: firstboot.html:66 firstboot.html:80
-msgid "Agree"
-msgstr "同意"
-
-#: firstboot.html:88
-#, fuzzy
+#: firstboot.html:70
 msgid "Timezone:"
 msgstr "时区："
 
-#: firstboot.html:99
+#: firstboot.html:81
 msgid "Username:"
 msgstr "用户名："
 
-#: firstboot.html:107
+#: firstboot.html:89
 msgid "Password:"
 msgstr "密码："
 
-#: firstboot.html:115
+#: firstboot.html:97
 msgid "Again:"
 msgstr "再次输入密码："
 
-#: firstboot.html:125
+#: firstboot.html:107
 msgid "Hostname:"
 msgstr "主机名："
+
+#: firstboot.html:125
+msgid "Preparing the disk and configuring system, please be patient..."
+msgstr "正在准备磁盘并配置系统，请稍后..."
 
 #: js/fcutil.js:106
 msgid "username is empty or invalid"
@@ -65,10 +64,12 @@ msgstr "用户名为空或者无效"
 msgid "user already exists"
 msgstr "用户已经存在"
 
-#: js/firstboot.js:183 js/firstboot.js:226
+#: js/firstboot.js:143 js/firstboot.js:188
 msgid "passwd does not match"
 msgstr "密码不匹配"
 
-#: js/firstboot.js:236
-msgid "you need to agree all licenses to continue"
-msgstr "您必须同意所有licenses才能继续"
+#~ msgid "Agree"
+#~ msgstr "同意"
+
+#~ msgid "you need to agree all licenses to continue"
+#~ msgstr "您必须同意所有licenses才能继续"

@@ -51,6 +51,7 @@ $(function() {
         // RF_KEYBOARD=en
         toggleUIComponent('#ui_username', (uicomps.RF_USERNAME ? 'block' : 'none'));
         toggleUIComponent('#ui_hostname', (uicomps.RF_HOSTNAME ? 'block' : 'none'));
+        $('#ui_hint').hide();
     }
 
 
@@ -150,7 +151,9 @@ $(function() {
     }
 
     // start journey: check all necessary fields and submit results
-    $('#start').bind('click', function() {
+    $('#start').bind('click', function(ev) {
+        ev.preventDefault();
+
         // collect configs
         firstcfg.options.mode = "firstboot";
 
@@ -196,14 +199,18 @@ $(function() {
             return false;
         }
 
-        res = firstcfg.submit();
-        console.log(res);
-        if ( res.status ) {
-            // quit Fisrt config
-            console.log('closeWindow');
-            window.close();
-            hostobj.closeWindow();
+        function doSubmit() {
+            var res = firstcfg.submit();
+            console.log(res);
+            if ( res.status ) {
+                // quit Fisrt config
+                console.log('closeWindow');
+                window.close();
+                hostobj.closeWindow();
+            }
         }
+
+        $('#ui_hint').fadeIn('slow', doSubmit);
     });
 });
 
