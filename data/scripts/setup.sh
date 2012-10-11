@@ -12,7 +12,14 @@ if [ x$HIPPO_TESTMODE == x1 ]; then
 fi
 
 if [ -n "$HIPPO_LANG" ]; then
+
     echo "export LANG=${HIPPO_LANG}" > /etc/skel/.xprofile
+    cat << _EOF >> /etc/.xprofile
+export LANG={HIPPO_LANG}
+if [ -x .config/user-first-run.sh ]; then
+    .config/user-first-run.sh
+fi
+_EOF
 
     DESKTOP="NULL_DIR"
     ## kde
