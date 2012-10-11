@@ -13,8 +13,7 @@ fi
 
 if [ -n "$HIPPO_LANG" ]; then
 
-    echo "export LANG=${HIPPO_LANG}" > /etc/skel/.xprofile
-    cat << _EOF >> /etc/.xprofile
+    cat << _EOF > /etc/.xprofile
 export LANG={HIPPO_LANG}
 if [ -x .config/user-first-run.sh ]; then
     .config/user-first-run.sh
