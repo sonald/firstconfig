@@ -66,6 +66,8 @@ if [ -n "$HIPPO_LIVECD" ]; then
     passwd -d ${LIVECD_USER}
     sed  's/root\:[^:]*:/root\:!\:/g' -i /etc/shadow
 
+    #lightdm 
+    test -f /etc/lightdm/lightdm.conf && sed -i "s/.*autologin-user=.*/autologin-user=${LIVECD_USER}/" /etc/lightdm/lightdm.conf
     # gdm
     test -f /etc/gdm/custom.conf && sed "s/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=${LIVECD_USER}" -i /etc/gdm/custom.conf
     ## kdmrc
@@ -190,5 +192,6 @@ if [ -n "$do_mkfs" ]; then
     [ -b "$part" ] && $do_mkfs -q $part
 fi
 
+rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
 echo "firstboot setup finished"
 exit 0
