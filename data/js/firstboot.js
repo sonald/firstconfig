@@ -131,7 +131,7 @@ $(function() {
             var $usrname = controlMap.username;
             $usrname.on('keyup', function() {
                 setTimeout(function() {
-                    controlMap.hostname.val( $usrname.val() + '-redflag' );
+                    controlMap.hostname.val( $usrname.val() + '-host' );
                 }, 0);
             });
         }
