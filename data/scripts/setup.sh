@@ -20,9 +20,9 @@ if [ -x .config/user-first-run.sh ]; then
 fi
 _EOF
 
-    DESKTOP="NULL_DIR"
+    DESKTOP="Desktop"
     ## kde
-    if [ -f /usr/share/config/kdm/kdmrc ]; then
+    if [ -f /usr/share/xsessions/kde-plasma.desktop ]; then
         sed -i "s/^#Language.*/Language=`echo ${HIPPO_LANG}| cut -d . -f 1`/g" /usr/share/config/kdm/kdmrc
         sed -i "s/Language=.*/Language=`echo ${HIPPO_LANG}| cut -d . -f 1`/g" /etc/skel/.kde4/share/config/kdeglobals
         if [ ${HIPPO_LANG} == "zh_CN.UTF-8" ]; then
@@ -39,7 +39,6 @@ _EOF
         else
             mkdir -v -p /etc/skel/{Desktop,Documents,Downloads,Music,Pictures,Videos}
             PIC="Pictures"
-            DESKTOP="Desktop"
             sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/activitymanagerrc
             sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/plasma-desktop-appletsrc
         fi
@@ -76,18 +75,10 @@ if [ -n "$HIPPO_LIVECD" ]; then
         -e 's/.*AllowNullPasswd.*/AllowNullPasswd=true/g'  /usr/share/config/kdm/kdmrc
 
     ## 安装程序到桌面
-    test -d /home/${LIVECD_USER}/${DESKTOP} &&  rm -rf /usr/share/apps/kio_desktop/* &&  rm -fr /home/${LIVECD_USER}/${DESKTOP}/*
-    test -f /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc && \
-    cat << _EOF >> /home/${LIVECD_USER}/.kde4/share/config/plasma-desktop-appletsrc  
-[Containments][8][Applets][23]  
-geometry=30,30,100,100  
-immutability=1  
-plugin=icon  
-zvalue=0  
-
-[Containments][8][Applets][23][Configuration]  
-Url=file:///usr/share/applications/qomoinstaller.desktop  
-_EOF
+    [[ ${HIPPO_LANG} == "zh_CN.UTF-8" ]] && DESKTOP="桌面" || DESKTOP="Desktop"
+    install -d -m700 /home/${LIVECD_USER}/${DESKTOP}
+    rm -fr /home/${LIVECD_USER}/${DESKTOP}/*
+    install -m755 /usr/share/applications/qomoinstaller.desktop  /home/${LIVECD_USER}/${DESKTOP}
 
     ## sony livecd autostart
     if [ "$HIPPO_EXTENDED" == "primary" ]; then
@@ -98,6 +89,9 @@ _EOF
     echo "firstboot setup finished"
     exit 0
 fi
+
+## uninstall qomoinstaller
+rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
 
 if [ -n "$HIPPO_HOSTNAME" ]; then
     ## hostname
@@ -192,6 +186,5 @@ if [ -n "$do_mkfs" ]; then
     [ -b "$part" ] && $do_mkfs -q $part
 fi
 
-rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
 echo "firstboot setup finished"
 exit 0
