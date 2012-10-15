@@ -90,6 +90,9 @@ if [ -n "$HIPPO_LIVECD" ]; then
     exit 0
 fi
 
+## uninstall qomoinstaller
+rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
+
 if [ -n "$HIPPO_HOSTNAME" ]; then
     ## hostname
     echo $HIPPO_HOSTNAME > /etc/hostname
@@ -183,6 +186,5 @@ if [ -n "$do_mkfs" ]; then
     [ -b "$part" ] && $do_mkfs -q $part
 fi
 
-rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
 echo "firstboot setup finished"
 exit 0
