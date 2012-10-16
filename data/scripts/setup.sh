@@ -79,9 +79,9 @@ if [ -n "$HIPPO_LIVECD" ]; then
 
     ## 安装程序到桌面
     [[ ${HIPPO_LANG} == "zh_CN.UTF-8" ]] && DESKTOP="桌面" || DESKTOP="Desktop"
-    install -d -m700 /home/${LIVECD_USER}/${DESKTOP}
+    su - ${LIVECD_USER} -c "install -d -m755 /home/${LIVECD_USER}/${DESKTOP}"
     rm -fr /home/${LIVECD_USER}/${DESKTOP}/*
-    install -m755 /usr/share/applications/qomoinstaller.desktop  /home/${LIVECD_USER}/${DESKTOP}
+    su - ${LIVECD_USER} -c "install -m755 /usr/share/applications/qomoinstaller.desktop  /home/${LIVECD_USER}/${DESKTOP}"
 
     ## sony livecd autostart
     if [ "$HIPPO_EXTENDED" == "primary" ]; then
