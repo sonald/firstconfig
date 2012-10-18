@@ -15,7 +15,6 @@ iframe {
 
 #content {
     margin: 10px auto;
-
 }
 
 .mailbox {
@@ -40,7 +39,8 @@ iframe {
 
     padding: 20px;
     border-radius: 20px;
-
+    max-height: 700px;
+    overflow: auto;
 }
 
 .section {
@@ -75,4 +75,26 @@ iframe {
 
 .checked {
     background-position: 0 -46px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgba(228, 220, 180, 0.6);
+    -webkit-box-shadow: 0 0 2px rgba(0,0,0,0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    border-radius: 4px;
+    background: rgba(228, 220, 180, 1);
+
+    /*background: #F5E6DD;*/
+    -webkit-box-shadow: 0 0 6px rgba(0,0,0,0.4);
 }
