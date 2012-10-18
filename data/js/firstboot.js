@@ -63,6 +63,30 @@ $(function() {
 
     var sys_lang = uicomps.RF_LANG ? uicomps.RF_LANG : 'zh_CN.UTF-8';
 
+    function registerLicenseHandler(host) {
+        var $btn = host.find('.mycheckbox');
+
+        var controller = {
+            agree: function() {
+                $btn.addClass('checked');
+            },
+
+            disagree: function() {
+                $btn.removeClass('checked');
+            },
+
+            toggle: function() {
+                $btn.toggleClass('checked');
+            }
+        };
+
+        host.on('click', '.mycheckbox', function() {
+            controller.toggle();
+        });
+
+        return controller;
+    }
+
     function toggleLicenseFor(vendor, src) {
         var $license = $( '#ui_' + vendor + '_license' );
         $license.find('iframe').attr('src', src);
@@ -80,12 +104,13 @@ $(function() {
         var lang_choice = /(\S+_[^.]+)(\..*)?/.exec(locale_choice)[1];
 
         if (uicomps.RF_RFLICENSE) {
-            var $rf = toggleLicenseFor('redflag',
-                'licenses/redflag_licence_' + lang_choice + '.html');
+            toggleLicenseFor('redflag', 'licenses/redflag_licence_' + lang_choice + '.html');
+            registerLicenseHandler( $('#ui_redflag_license') );
         }
 
         if (uicomps.RF_HWLICENSE) {
             toggleLicenseFor('oem', 'oem/licence_' + lang_choice + '.html');
+            registerLicenseHandler( $('#ui_oem_license') );
         }
 
         firstcfg.loadTranslation(lang_choice);
@@ -169,6 +194,22 @@ $(function() {
             firstcfg.options.lang = uicomps.RF_LANG;
         } else {
             firstcfg.options.lang = controlMap.lang.find('input:checked').val();
+        }
+
+        if (uicomps.RF_RFLICENSE) {
+            var $rfbtn = $('#ui_redflag_license').find('.mycheckbox');
+            if (!$rfbtn.hasClass('checked')) {
+                firstcfg.notify($rfbtn, firstcfg.i18n.gettext("you have to agree with this license") );
+                return false;
+            }
+        }
+
+        if (uicomps.RF_HWLICENSE) {
+            var $oembtn = $('#ui_oem_license').find('.mycheckbox');
+            if (!$oembtn.hasClass('checked')) {
+                firstcfg.notify($oembtn, firstcfg.i18n.gettext("you have to agree with this license") );
+                return false;
+            }
         }
 
         if (uicomps.RF_TIMEZONE) {
