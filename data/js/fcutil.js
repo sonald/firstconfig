@@ -41,9 +41,10 @@
 
         notify: function(elem, msg) {
             var $elem = $(elem);
+            var place = (arguments.length === 3) ? arguments[2] : 'right';
             $elem.tooltip({
                 title: msg,
-                placement: 'right',
+                placement: place,
                 trigger: 'manual'
             });
 

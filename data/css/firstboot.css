@@ -64,6 +64,12 @@ iframe {
     margin: 10px auto;
 }
 
+.license-btns {
+    margin: 20px 0;
+    text-align: right;
+    list-style: none;
+}
+
 .mycheckbox {
     display: inline-block;
     background: url('checkbox.png') no-repeat;
@@ -97,4 +103,9 @@ iframe {
 
     /*background: #F5E6DD;*/
     -webkit-box-shadow: 0 0 6px rgba(0,0,0,0.4);
+}
+
+#ui_hint {
+    margin: 0px;
+    padding: 0px;
 }
