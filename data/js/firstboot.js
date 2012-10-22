@@ -199,7 +199,9 @@ $(function() {
         if (uicomps.RF_RFLICENSE) {
             var $rfbtn = $('#ui_redflag_license').find('.mycheckbox');
             if (!$rfbtn.hasClass('checked')) {
-                firstcfg.notify($rfbtn, firstcfg.i18n.gettext("you have to agree with this license") );
+                firstcfg.notify($rfbtn,
+                    firstcfg.i18n.gettext("you have to agree with this license"),
+                    'left' );
                 return false;
             }
         }
@@ -207,7 +209,9 @@ $(function() {
         if (uicomps.RF_HWLICENSE) {
             var $oembtn = $('#ui_oem_license').find('.mycheckbox');
             if (!$oembtn.hasClass('checked')) {
-                firstcfg.notify($oembtn, firstcfg.i18n.gettext("you have to agree with this license") );
+                firstcfg.notify($oembtn,
+                    firstcfg.i18n.gettext("you have to agree with this license"),
+                    'left' );
                 return false;
             }
         }

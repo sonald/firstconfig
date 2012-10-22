@@ -26,6 +26,7 @@ import os
 import sys
 import tempfile
 import traceback
+import subprocess
 
 from firstconfig import frontend
 from firstconfig import interface
@@ -41,6 +42,16 @@ def exception_handler(type, value, tb):
 
 sys.excepthook = exception_handler
 
+
+def check_liveflag():
+    cmd = """awk 'END { for (i = 1; i <= NF; i++) { if ($i == "rflive") exit 0 }; exit 1}' /proc/cmdline"""
+    try:
+        return subprocess.call(cmd, shell=True)
+    except Exception as e:
+        print(e)
+        return 0
+
+
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('-t', '--test', action='store_true', default=False)
@@ -49,7 +60,7 @@ if __name__ == '__main__':
     opts, args = parser.parse_args()
 
     # check if we're running in LiveCD
-    if os.path.exists('/run/redflagiso/sfs/root-image/root-image.fs'):
+    if check_liveflag() == 0:
         livecdMode = True
     else:
         livecdMode = False
