@@ -93,6 +93,14 @@ $(function() {
         return $license;
     }
 
+    if (uicomps.RF_RFLICENSE) {
+        registerLicenseHandler( $('#ui_redflag_license') );
+    }
+
+    if (uicomps.RF_HWLICENSE) {
+        registerLicenseHandler( $('#ui_oem_license') );
+    }
+
     $('body').on('languageChanged.firstboot', function() {
         // RF_LANG exists, use sys_lang as default
         var locale_choice = sys_lang;
@@ -105,12 +113,10 @@ $(function() {
 
         if (uicomps.RF_RFLICENSE) {
             toggleLicenseFor('redflag', 'licenses/redflag_licence_' + lang_choice + '.html');
-            registerLicenseHandler( $('#ui_redflag_license') );
         }
 
         if (uicomps.RF_HWLICENSE) {
             toggleLicenseFor('oem', 'oem/licence_' + lang_choice + '.html');
-            registerLicenseHandler( $('#ui_oem_license') );
         }
 
         firstcfg.loadTranslation(lang_choice);
