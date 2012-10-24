@@ -148,7 +148,9 @@ $(function() {
             placeholder: "Choose your timezone",
             width: "60%"
         });
-        $tzSelect.select2("val", "Asia/Shanghai");
+        console.log(uicomps);
+        uicomps.RF_TIMEZONE_DEFAULT = uicomps.RF_TIMEZONE_DEFAULT || "Asia/Shanghai";
+        $tzSelect.select2("val", uicomps.RF_TIMEZONE_DEFAULT);
     }
 
     if (uicomps.RF_USERNAME) {

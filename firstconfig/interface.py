@@ -155,6 +155,9 @@ class Interface:
         with open(RF_CONF) as conffile:
             for line in conffile:
                 if line.startswith('#'):
+                    k, v = line.strip().split('=')
+                    if k.find('RF_TIMEZONE') > -1:
+                        self.conf['RF_TIMEZONE_DEFAULT'] = v
                     continue
 
                 k, v = line.strip().split('=')
