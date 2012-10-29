@@ -160,6 +160,8 @@ if [ "$HIPPO_EXTENDED" == "primary" ]; then
     parted -s -m $destdisk unit MB mkpart primary $((begin + 1)) 100%
 
     [ $? -eq 0 ] && do_mkfs=mkfs.ext3
+    # do_super_dir will force to create a dir in the last part and stuff a 777 dir in it.
+    do_super_dir=1
 
 elif [ "$HIPPO_EXTENDED" == "logical" ]; then
     # lenovo
@@ -188,7 +190,20 @@ if [ -n "$do_mkfs" ]; then
     last_part=$( parted -s -m $destdisk p | awk -F: 'END {print $1}' )
     part=${destdisk}${last_part}
     [ -b "$part" ] && $do_mkfs -q $part
+
+    if [ -n "$do_super_dir" ]; then
+        tmpdir=$( mktemp -d )
+        if [ -d "$tmpdir" ]; then
+            mount $part $tmpdir
+            mkdir -p $tmpdir/hdd
+            chmod 777 $tmpdir/hdd
+            umount $part
+            rmdir $tmpdir
+        fi
+    fi
 fi
+
+
 
 echo "firstboot setup finished"
 exit 0
