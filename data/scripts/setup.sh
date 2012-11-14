@@ -89,7 +89,14 @@ if [ -n "$HIPPO_LIVECD" ]; then
         sed -i 's|Exec=.*|& -a -s|g' /usr/share/applications/qomoinstaller.desktop 
         ln -sf /usr/share/applications/qomoinstaller.desktop /etc/xdg/autostart
     fi
-    
+   
+	##ati kmix config in livecd
+	lspci |grep VGA|grep ATI > /dev/null
+	if [ $? -eq 0 ]; then
+		cp -a /usr/share/ati-kmixrc/* /etc/skel/.kde4/share/config/
+	fi
+
+
     echo "firstboot setup finished"
     exit 0
 fi
@@ -129,6 +136,12 @@ if [ -n "$HIPPO_USERNAME" ]; then
         echo -e "${HIPPO_PASSWD}\n${HIPPO_PASSWD}" | passwd $HIPPO_USERNAME
     fi
     sed  's/root\:[^:]*:/root\:!\:/g' -i /etc/shadow
+fi
+
+##ati kmix config 
+lspci |grep VGA|grep ATI > /dev/null
+if [ $? -eq 0 ]; then
+	cp -a /usr/share/ati-kmixrc/* /etc/skel/.kde4/share/config/
 fi
 
 
