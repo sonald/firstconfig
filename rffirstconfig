@@ -44,7 +44,7 @@ sys.excepthook = exception_handler
 
 
 def check_liveflag():
-    cmd = """awk 'END { for (i = 1; i <= NF; i++) { if ($i == "rflive") exit 0 }; exit 1}' /proc/cmdline"""
+    cmd = """awk '$2 == "/run/redflagiso/bootmnt"  {exists = 1} END { if (!exists) {exit 1} }' /proc/mounts""";
     try:
         return subprocess.call(cmd, shell=True)
     except Exception as e:
