@@ -11,6 +11,7 @@ if [ x$HIPPO_TESTMODE == x1 ]; then
     exit 0
 fi
 
+hwclock -s
 if [ -n "$HIPPO_LANG" ]; then
 
     cat << _EOF > /etc/skel/.xprofile
@@ -108,6 +109,7 @@ if [ -n "$HIPPO_TIMEZONE" ]; then
     # HIPPO_TIMEZONE=Asia/Shanghai
     ln -sf /usr/share/zoneinfo/$HIPPO_TIMEZONE /etc/localtime
     echo "${HIPPO_TIMEZONE}" > /etc/timezone
+    hwclock -s
 fi
 
 if [ -n "$HIPPO_KEYBOARD" ]; then
