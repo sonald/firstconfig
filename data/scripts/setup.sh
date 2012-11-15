@@ -39,12 +39,19 @@ _EOF
             mkdir -v -p /etc/skel/{桌面,文档,下载,音乐,图片,视频}
             PIC="图片"
 
-            DESKTOP="桌面"
+			DESKTOP="桌面"
+
+			## ati kmix config cn 
+			lspci |grep VGA|grep -q ATI && cp -af /usr/share/ati-kmix/cn/* /etc/skel/.kde4/share/config/
         else
             mkdir -v -p /etc/skel/{Desktop,Documents,Downloads,Music,Pictures,Videos}
             PIC="Pictures"
             sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/activitymanagerrc
-            sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/plasma-desktop-appletsrc
+			sed -i 's/活动/desktop/g' /etc/skel/.kde4/share/config/plasma-desktop-appletsrc
+
+			## ati kmix config en 
+			lspci |grep VGA|grep -q ATI && cp -af /usr/share/ati-kmix/en/* /etc/skel/.kde4/share/config/
+
         fi
             cat << _EOF >> /etc/skel/${PIC}/.directory
 [Dolphin]
@@ -89,13 +96,6 @@ if [ -n "$HIPPO_LIVECD" ]; then
         sed -i 's|Exec=.*|& -a -s|g' /usr/share/applications/qomoinstaller.desktop 
         ln -sf /usr/share/applications/qomoinstaller.desktop /etc/xdg/autostart
     fi
-   
-	##ati kmix config in livecd
-	lspci |grep VGA|grep ATI > /dev/null
-	if [ $? -eq 0 ]; then
-		cp -a /usr/share/ati-kmixrc/* /etc/skel/.kde4/share/config/
-	fi
-
 
     echo "firstboot setup finished"
     exit 0
@@ -138,11 +138,6 @@ if [ -n "$HIPPO_USERNAME" ]; then
     sed  's/root\:[^:]*:/root\:!\:/g' -i /etc/shadow
 fi
 
-##ati kmix config 
-lspci |grep VGA|grep ATI > /dev/null
-if [ $? -eq 0 ]; then
-	cp -a /usr/share/ati-kmixrc/* /etc/skel/.kde4/share/config/
-fi
 
 
 # handling post install disk partitioning
