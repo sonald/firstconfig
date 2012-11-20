@@ -103,7 +103,7 @@ fi
 
 ## uninstall qomoinstaller
 rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
-test -f /usr/lib/yum/uuid && rm -f /usr/lib/yum/uuid
+test -f /var/lib/yum/uuid && rm -f /var/lib/yum/uuid
 
 if [ -n "$HIPPO_HOSTNAME" ]; then
     ## hostname
