@@ -16,6 +16,8 @@ if [ -n "$HIPPO_LANG" ]; then
 
     cat << _EOF > /etc/skel/.xprofile
 export LANG=${HIPPO_LANG}
+export XIM=fcitx
+export XIM_PROGRAM=/usr/bin/fcitx
 export GTK_IM_MODULE=xim
 export QT_IM_MODULE=xim
 export XMODIFIERS="@im=fcitx"
