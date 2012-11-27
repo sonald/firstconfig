@@ -16,6 +16,8 @@ if [ -n "$HIPPO_LANG" ]; then
 
     cat << _EOF > /etc/skel/.xprofile
 export LANG=${HIPPO_LANG}
+export XIM=fcitx
+export XIM_PROGRAM=/usr/bin/fcitx
 export GTK_IM_MODULE=xim
 export QT_IM_MODULE=xim
 export XMODIFIERS="@im=fcitx"
@@ -72,7 +74,7 @@ if [ -n "$HIPPO_LIVECD" ]; then
 
     LIVECD_USER="installer"
 
-    useradd -m -g users -G wheel,video,audio,adm,lp ${LIVECD_USER}
+    useradd -m -g users -G wheel,video,audio,adm,storage ${LIVECD_USER}
     passwd -d ${LIVECD_USER}
     sed  's/root\:[^:]*:/root\:!\:/g' -i /etc/shadow
 
