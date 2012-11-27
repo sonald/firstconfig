@@ -74,7 +74,7 @@ if [ -n "$HIPPO_LIVECD" ]; then
 
     LIVECD_USER="installer"
 
-    useradd -m -g users -G wheel,video,audio,adm,lp ${LIVECD_USER}
+    useradd -m -g users -G wheel,video,audio,adm,storage ${LIVECD_USER}
     passwd -d ${LIVECD_USER}
     sed  's/root\:[^:]*:/root\:!\:/g' -i /etc/shadow
 
