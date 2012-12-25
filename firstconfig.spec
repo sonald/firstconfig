@@ -36,6 +36,9 @@ rm -rf %{buildroot}
 if [ $1 -ne 2 -a ! -f /etc/sysconfig/firstboot ]; then
     systemctl enable firstconfig.service >/dev/null 2>&1 || :
 fi
+if [ ! -d /etc/sysconfig ]; then
+    mkdir -p /etc/sysconfig
+fi
 
 %preun
 /bin/systemctl stop firstconfig.service > /dev/null 2>&1 || :
