@@ -107,6 +107,7 @@ fi
 ## uninstall qomoinstaller
 rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
 test -f /var/lib/yum/uuid && rm -f /var/lib/yum/uuid
+[[ ${HIPPO_LANG} != "zh_CN.UTF-8" ]] && yum erase -q -y fcitx
 
 if [ -n "$HIPPO_HOSTNAME" ]; then
     ## hostname
