@@ -66,7 +66,11 @@ _EOF
 
 fi
 
-[[ ${HIPPO_LANG} != "zh_CN.UTF-8" ]] && yum erase -q -y fcitx
+if [ ${HIPPO_LANG} != "zh_CN.UTF-8" ]
+then
+    yum erase -q -y fcitx
+    [[ -f /etc/skel/.config/chromium/Default/Preferences ]] && sed -i 's|www.redflag-linux.com|www.redflag-linux.com/en|g' /etc/skel/.config/chromium/Default/Preferences
+fi
 
 if [ -n "$HIPPO_LIVECD" ]; then
 
