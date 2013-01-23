@@ -31,6 +31,7 @@ _EOF
     if [ -f /usr/share/xsessions/kde-plasma.desktop ]; then
         sed -i "s/.*Language=.*/Language=`echo ${HIPPO_LANG}| cut -d . -f 1`/g" /usr/share/config/kdm/kdmrc
         sed -i "s/.*Language=.*/Language=`echo ${HIPPO_LANG}| cut -d . -f 1`/g" /etc/skel/.kde4/share/config/kdeglobals
+        echo "export XAUTHORITY=~/.Xauthority" >> /etc/skel/.xprofile
         if [ ${HIPPO_LANG} == "zh_CN.UTF-8" ]; then
             sed -i 's/Desktop/桌面/g' /etc/skel/.config/user-dirs.dirs
             sed -i 's/Documents/文档/g' /etc/skel/.config/user-dirs.dirs
