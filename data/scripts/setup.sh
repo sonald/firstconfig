@@ -138,7 +138,7 @@ fi
 
 if [ -n "$HIPPO_USERNAME" ]; then
     ## add user
-    useradd -m -g users -G wheel,video,audio,adm,lp  $HIPPO_USERNAME
+    useradd -m -g users -G wheel,video,audio,adm,lp,storage  $HIPPO_USERNAME
     if [ -z "$HIPPO_PASSWD" ]; then
         passwd -d $HIPPO_USERNAME
     else
