@@ -66,6 +66,12 @@ _EOF
 
 fi
 
+if [ ${HIPPO_LANG} != "zh_CN.UTF-8" ]
+then
+    yum erase -q -y fcitx
+    [[ -f /etc/skel/.config/chromium/Default/Preferences ]] && sed -i 's|www.redflag-linux.com|www.redflag-linux.com/en|g' /etc/skel/.config/chromium/Default/Preferences
+fi
+
 if [ -n "$HIPPO_LIVECD" ]; then
 
     # ping
@@ -107,7 +113,6 @@ fi
 ## uninstall qomoinstaller
 rpm -e nodejs-hippo nodejs-hippo-deps nodejs rfconfig-boot
 test -f /var/lib/yum/uuid && rm -f /var/lib/yum/uuid
-[[ ${HIPPO_LANG} != "zh_CN.UTF-8" ]] && yum erase -q -y fcitx
 
 if [ -n "$HIPPO_HOSTNAME" ]; then
     ## hostname
@@ -133,7 +138,7 @@ fi
 
 if [ -n "$HIPPO_USERNAME" ]; then
     ## add user
-    useradd -m -g users -G wheel,video,audio,adm,lp  $HIPPO_USERNAME
+    useradd -m -g users -G wheel,video,audio,adm,lp,storage  $HIPPO_USERNAME
     if [ -z "$HIPPO_PASSWD" ]; then
         passwd -d $HIPPO_USERNAME
     else
