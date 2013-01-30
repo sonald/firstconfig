@@ -93,7 +93,7 @@ iframe {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background: rgba(228, 220, 180, 0.6);
+    background: rgba(57, 53, 63, 0.6);
     -webkit-box-shadow: 0 0 2px rgba(0,0,0,0);
 }
 
