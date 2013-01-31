@@ -73,6 +73,8 @@ then
     [[ -f /etc/skel/.config/chromium/Default/Preferences ]] && sed -i 's|www.redflag-linux.com|www.redflag-linux.com/en|g' /etc/skel/.config/chromium/Default/Preferences
 fi
 
+test -d /host_share && rm -rf /host_share
+
 if [ -n "$HIPPO_LIVECD" ]; then
 
     # ping
