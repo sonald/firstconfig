@@ -14,6 +14,7 @@ fi
 hwclock -s
 if [ -n "$HIPPO_LANG" ]; then
 
+    if [ ! -f /etc/skel/.xprofile ]; then
     cat << _EOF > /etc/skel/.xprofile
 export LANG=${HIPPO_LANG}
 export XIM=fcitx
@@ -25,6 +26,7 @@ if [ -x .config/user-first-run.sh ]; then
     .config/user-first-run.sh
 fi
 _EOF
+fi
 
     DESKTOP="Desktop"
     ## kde
@@ -90,7 +92,7 @@ if [ -n "$HIPPO_LIVECD" ]; then
     #lightdm 
     test -f /etc/lightdm/lightdm.conf && sed -i "s/.*autologin-user=.*/autologin-user=${LIVECD_USER}/" /etc/lightdm/lightdm.conf
     # gdm
-    test -f /etc/gdm/custom.conf && sed "s/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=${LIVECD_USER}" -i /etc/gdm/custom.conf
+    test -f /etc/gdm/custom.conf && sed "/daemon/a\AutomaticLoginEnable=True\nAutomaticLogin=${LIVECD_USER}" -i /etc/gdm/custom.conf
     ## kdmrc
     test -f /usr/share/config/kdm/kdmrc &&  sed -i -e 's/.*AutoLoginEnable.*/AutoLoginEnable=true/g'\
         -e "s/.*AutoLoginUser.*/AutoLoginUser=${LIVECD_USER}/g" \
