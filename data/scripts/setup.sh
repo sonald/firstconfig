@@ -26,6 +26,8 @@ if [ -x .config/user-first-run.sh ]; then
     .config/user-first-run.sh
 fi
 _EOF
+
+echo "LC_CTYPE=zh_CN.UTF-8" >> /etc/skel/.xprofile
 fi
 
     DESKTOP="Desktop"
@@ -71,7 +73,6 @@ fi
 
 if [ ${HIPPO_LANG} != "zh_CN.UTF-8" ]
 then
-    yum erase -q -y fcitx
     [[ -f /etc/skel/.config/chromium/Default/Preferences ]] && sed -i 's|www.redflag-linux.com|www.redflag-linux.com/en|g' /etc/skel/.config/chromium/Default/Preferences
 fi
 
