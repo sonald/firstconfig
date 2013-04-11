@@ -3,7 +3,7 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION",
          "Report-Msgid-Bugs-To": " ",
-         "POT-Creation-Date": " 2012-10-19 11:46+0800",
+         "POT-Creation-Date": " 2013-04-11 14:37+0800",
          "PO-Revision-Date": " YEAR-MO-DA HO:MI+ZONE",
          "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
          "Language-Team": " LANGUAGE <LL@li.org>",
@@ -18,7 +18,11 @@
       ],
       "Start Journey →": [
          null,
-         ""
+         "LiveCD Experience"
+      ],
+      "Install →": [
+         null,
+         "Install Now"
       ],
       "Welcome to first config": [
          null,

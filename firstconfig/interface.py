@@ -67,6 +67,7 @@ class ConfigHost(QObject):
         if self.interface.testMode:
             env['HIPPO_TESTMODE'] = '1'
 
+        self.env = env
         try:
             subp = subprocess.Popen("/usr/share/firstconfig/data/scripts/setup.sh",
                 shell=True, env=env)
@@ -103,6 +104,10 @@ class ConfigHost(QObject):
 
     def getUIComponents(self, opts={}):
         return self.interface.conf
+
+    @pyqtSlot()
+    def installer(self):
+        subprocess.Popen("/usr/share/firstconfig/data/scripts/installer.sh", shell=True, env=self.env).wait()
 
     @pyqtSlot()
     def closeWindow(self):
@@ -170,6 +175,7 @@ class Interface:
 
     def createGUI(self):
         self.app = QApplication(sys.argv)
+        self.hostobj = ConfigHost(self)
         if self.livecdMode:
             self.greeter = self.createLiveCDUI()
         else:
@@ -177,8 +183,7 @@ class Interface:
 
     def setupHostObjects(self):
         log.debug('bound setupHostObjects')
-        hostobj = ConfigHost(self)
-        self.view.page().mainFrame().addToJavaScriptWindowObject("hostobj", hostobj)
+        self.view.page().mainFrame().addToJavaScriptWindowObject("hostobj", self.hostobj)
 
     def createSkeletonUI(self, pageHtml=""):
         self.window = QWidget()
