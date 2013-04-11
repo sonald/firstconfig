@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-19 11:46+0800\n"
+"POT-Creation-Date: 2013-04-11 14:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,11 @@ msgstr ""
 
 #: livecd.html:45 firstboot.html:133
 msgid "Start Journey →"
-msgstr ""
+msgstr "LiveCD Experience"
+
+#: livecd.html:48
+msgid "Install →"
+msgstr "Install Now"
 
 #: firstboot.html:32
 msgid "Welcome to first config"
@@ -57,18 +61,18 @@ msgstr ""
 msgid "Preparing the disk and configuring system, please be patient..."
 msgstr ""
 
-#: js/fcutil.js:106
+#: js/fcutil.js:107
 msgid "username is empty or invalid"
 msgstr ""
 
-#: js/fcutil.js:120
+#: js/fcutil.js:121
 msgid "user already exists"
 msgstr ""
 
-#: js/firstboot.js:168 js/firstboot.js:229
+#: js/firstboot.js:176 js/firstboot.js:241
 msgid "passwd does not match"
 msgstr ""
 
-#: js/firstboot.js:202 js/firstboot.js:210
+#: js/firstboot.js:211 js/firstboot.js:221
 msgid "you have to agree with this license"
 msgstr ""

@@ -51,7 +51,7 @@ $(function() {
     sys_lang = 'zh_CN.UTF-8';
     $('input[value="' + sys_lang + '"]').trigger('click');
 
-    $('#start').bind('click', function() {
+    function submitHandler(event) {
         // collect configs
         firstcfg.options.mode = "livecd";
         firstcfg.options.lang = $langs.find('input:checked').val();
@@ -65,12 +65,19 @@ $(function() {
 
         res = firstcfg.submit();
         console.log(res);
+        if (event.data !== null) {
+            event.data();
+            res.status = false;
+        }
         if ( res.status ) {
             // quit First config
             console.log('closeWindow');
             window.close();
             hostobj.closeWindow();
         }
-    });
+    }
+
+    $('#start').bind('click', submitHandler);
+    $('#install').bind('click', hostobj.installer, submitHandler);
 });
 
