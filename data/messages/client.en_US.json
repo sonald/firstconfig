@@ -3,7 +3,7 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION",
          "Report-Msgid-Bugs-To": " ",
-         "POT-Creation-Date": " 2013-04-11 14:37+0800",
+         "POT-Creation-Date": " 2013-04-12 10:46+0800",
          "PO-Revision-Date": " YEAR-MO-DA HO:MI+ZONE",
          "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
          "Language-Team": " LANGUAGE <LL@li.org>",
@@ -16,11 +16,11 @@
          null,
          ""
       ],
-      "Start Journey →": [
+      "Start Journey": [
          null,
          "LiveCD Experience"
       ],
-      "Install →": [
+      "Installation": [
          null,
          "Install Now"
       ],
@@ -49,6 +49,10 @@
          ""
       ],
       "Hostname:": [
+         null,
+         ""
+      ],
+      "Start Journey →": [
          null,
          ""
       ],

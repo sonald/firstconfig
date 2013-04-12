@@ -3,7 +3,7 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION",
          "Report-Msgid-Bugs-To": " ",
-         "POT-Creation-Date": " 2013-04-11 14:37+0800",
+         "POT-Creation-Date": " 2013-04-12 10:46+0800",
          "PO-Revision-Date": " YEAR-MO-DA HO:MI+ZONE",
          "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
          "Language-Team": " LANGUAGE <LL@li.org>",
@@ -19,11 +19,11 @@
          null,
          "选择语言"
       ],
-      "Start Journey →": [
+      "Start Journey": [
          null,
          "LiveCD体验"
       ],
-      "Install →": [
+      "Installation": [
          null,
          "马上安装"
       ],
@@ -54,6 +54,10 @@
       "Hostname:": [
          null,
          "主机名："
+      ],
+      "Start Journey →": [
+         null,
+         "开始旅程 →"
       ],
       "Preparing the disk and configuring system, please be patient...": [
          null,
