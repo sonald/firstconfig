@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-11 14:37+0800\n"
+"POT-Creation-Date: 2013-04-12 10:46+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,12 +21,14 @@ msgstr ""
 msgid "Select a language"
 msgstr ""
 
-#: livecd.html:45 firstboot.html:133
-msgid "Start Journey →"
+#: livecd.html:45
+#, fuzzy
+msgid "Start Journey"
 msgstr "LiveCD Experience"
 
 #: livecd.html:48
-msgid "Install →"
+#, fuzzy
+msgid "Installation"
 msgstr "Install Now"
 
 #: firstboot.html:32
@@ -55,6 +57,10 @@ msgstr ""
 
 #: firstboot.html:123
 msgid "Hostname:"
+msgstr ""
+
+#: firstboot.html:133
+msgid "Start Journey →"
 msgstr ""
 
 #: firstboot.html:141
